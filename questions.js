@@ -707,6 +707,99 @@ const journeyQuestions = [
         ]
     },
 
+    {
+        id: 'Q5F',
+        phase: 'cap5-rei',
+        badge: '👑 CAPÍTULO 5: A LEALDADE AO REI',
+        title: 'Servindo a Coroa',
+        context: 'Você deu a chave ao Rei. Ele sorri. "Você fez a escolha certa. A Ordem não passa de rebeldes. O Reino precisa desta arma para proteger o povo." Você é nomeado Conselheiro Real. Mas... você começa a perceber: o Rei quer GUERRA, não proteção.',
+        options: [
+            {
+                text: 'SIRVO o Rei fielmente. Ordem é importante.',
+                points: 70,
+                feedback: 'Lealdade cega. Você se torna instrumento de tirania.',
+                nextQuestionId: 'FINAL25-SERVO-DO-REI',
+                karma: { loyalty: +2, naivety: +1 }
+            },
+            {
+                text: 'TRAIO o Rei! "Isso é errado!" Roubo a chave de volta!',
+                points: 85,
+                feedback: 'REDENÇÃO! Você corrige seu erro! Perseguição começa...',
+                nextQuestionId: 'FINAL26-REDENTOR',
+                karma: { redemption: +4, courage: +2 }
+            },
+            {
+                text: 'FUJO! Não quero parte nisso! Abandono tudo!',
+                points: 50,
+                feedback: 'Covardia. Você vive... mas carrega culpa eterna.',
+                nextQuestionId: 'FINAL-CULPA',
+                karma: { cowardice: +2, guilt: +3 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q5G',
+        phase: 'cap5-assassinos',
+        badge: '💀 CAPÍTULO 5: PACTO COM ASSASSINOS',
+        title: 'Sangue e Ouro',
+        context: 'Você vendeu a chave aos Assassinos. Ouro ENCHE suas mãos. Mas... à noite, você vê rostos. Pessoas que MORRERÃO porque você vendeu poder aos errados. Ganância trouxe riqueza... e culpa insuportável.',
+        options: [
+            {
+                text: 'ACEITO minha escolha. Riqueza vale a culpa.',
+                points: 40,
+                feedback: 'Vazio. Você vive rico... e morto por dentro.',
+                nextQuestionId: 'FINAL-VAZIO',
+                karma: { greed: +4, emptiness: +3 }
+            },
+            {
+                text: 'BUSCO REDENÇÃO! Vou corrigir isso! Roubo a chave de volta!',
+                points: 80,
+                feedback: 'CRESCIMENTO! Você reconhece erro e AGE!',
+                nextQuestionId: 'FINAL26-REDENTOR',
+                karma: { redemption: +4, courage: +3 }
+            },
+            {
+                text: 'ME MATO. Não consigo viver com o que fiz.',
+                points: 30,
+                feedback: 'Desespero final. Sua morte não desfaz seus atos.',
+                nextQuestionId: 'FINAL-SUICIDIO',
+                karma: { despair: +5 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q5H',
+        phase: 'cap5-destruicao-chave',
+        badge: '💥 CAPÍTULO 5: SEM VOLTA',
+        title: 'O Ato Definitivo',
+        context: 'Você DESTRÓI a chave! Um clarão! Explosão de energia! A chave se DISSOLVE! O portal fecha! A arma... NUNCA existirá. Você salvou o mundo de si mesmo. Mas... as 3 facções estão FURIOSAS. Todos te querem MORTO. Você fugiu. Mas pra onde?',
+        options: [
+            {
+                text: 'FUJO para terras distantes. Novo nome. Nova vida.',
+                points: 85,
+                feedback: 'Exílio. Você vive escondido... mas em paz consigo mesmo.',
+                nextQuestionId: 'FINAL27-EXILADO',
+                karma: { sacrifice: +4, peace: +2 }
+            },
+            {
+                text: 'ENFRENTO todos! "Venham! Fiz o certo!"',
+                points: 75,
+                feedback: 'Bravura suicida. Você luta... e morre heroicamente.',
+                nextQuestionId: 'FINAL-MARTIR',
+                karma: { courage: +5, sacrifice: +4 }
+            },
+            {
+                text: 'NEGO ter destruído. "Foi a Ordem!"',
+                points: 60,
+                feedback: 'Covardia. Você se salva... mas outros morrem por sua mentira.',
+                nextQuestionId: 'FINAL-CULPA',
+                karma: { deception: +3, guilt: +4 }
+            }
+        ]
+    },
+
     // ... (Continuo criando os outros finais)
 
     // ========================================
@@ -755,6 +848,377 @@ const journeyQuestions = [
         badge: '🗝️ FINAL SECRETO',
         title: 'O Silencioso',
         context: 'Você vira membro da Ordem dos Silenciosos. Sua existência é apagada. Registros destruídos. Você NUNCA existiu oficialmente. Vive nas sombras. Protege segredos. Impede catástrofes. Ninguém sabe seu nome. Ninguém sabe suas façanhas. Mas o MUNDO continua girando porque VOCÊ existe. É o herói mais solitário. Mais necessário. Mais esquecido. Nota: 90/100. Sacrifício absoluto.',
+        options: []
+    },
+
+    // ===== Q5I-L: Rotas do Q4C (Traição) =====
+    
+    {
+        id: 'Q5I',
+        phase: 'cap5-blefe',
+        badge: '🎭 CAPÍTULO 5: O BLEFE',
+        title: 'Negociação Desesperada',
+        context: 'Seu grito ecoa: "EU SOU O GUARDIÃO!" Os executores PARAM. Se entreolham. O líder se aproxima. "Prove." Você está amarrado, sem recursos, sem tempo. Mas você TEM conhecimento. O mapa revelou SEGREDOS que eles precisam. Você começa a FALAR...',
+        options: [
+            {
+                text: 'REVELO tudo que sei. Honestidade total.',
+                points: 85,
+                feedback: 'VERDADE como arma! Eles percebem: você é valioso VIVO.',
+                nextQuestionId: 'FINAL14-NEGOCIADOR',
+                karma: { honesty: +3, survival: +2 }
+            },
+            {
+                text: 'MINTO estrategicamente. Invento segredos que não sei.',
+                points: 70,
+                feedback: 'BLEFE arriscado... eles PERCEBEM. Mas respeitam a coragem.',
+                nextQuestionId: 'FINAL15-BLEFADOR',
+                karma: { deception: +2, courage: +1 }
+            },
+            {
+                text: 'BARGANHA: "Soltem-me e eu revelo TUDO."',
+                points: 80,
+                feedback: 'Negociação inteligente. Eles aceitam... COM condições.',
+                nextQuestionId: 'FINAL16-SOBREVIVENTE',
+                karma: { negotiation: +3 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q5J',
+        phase: 'cap5-dignidade',
+        badge: '👑 CAPÍTULO 5: HONRA NA MORTE',
+        title: 'A Última Palavra',
+        context: 'Você aceita seu destino com dignidade. "Façam o que devem. Mas saibam: vocês falharão sem mim." O executor ergue a lâmina... e PARA. "Há muito tempo não vejo coragem assim." Ele abaixa a arma. "Talvez... haja outro caminho."',
+        options: [
+            {
+                text: 'ACEITO a proposta. "Qual caminho?"',
+                points: 90,
+                feedback: 'Dignidade conquistou respeito. Uma aliança improvável nasce.',
+                nextQuestionId: 'FINAL17-HONRADO',
+                karma: { dignity: +4, wisdom: +2 }
+            },
+            {
+                text: 'RECUSO. "Não quero clemência de assassinos."',
+                points: 75,
+                feedback: 'Orgulho até o fim. Você morre... mas sua lenda vive.',
+                nextQuestionId: 'FINAL-MARTIR',
+                karma: { pride: +2, honor: +3 }
+            },
+            {
+                text: 'QUESTIONO: "Por que me poupar agora?"',
+                points: 85,
+                feedback: 'Sabedoria! Você entende: eles TÊM UM PLANO para você.',
+                nextQuestionId: 'FINAL18-REVELACAO-FINAL',
+                karma: { wisdom: +3, perception: +2 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q5K',
+        phase: 'cap5-furia',
+        badge: '⚡ CAPÍTULO 5: FÚRIA INCONTROLÁVEL',
+        title: 'Força Sobre-Humana',
+        context: 'RAIVA pura detona! Você QUEBRA as cordas com força que não sabia ter! Sangue escorre. Músculos rasgam. Você NÃO SE IMPORTA! Luta como ANIMAL! Socos, mordidas, cabeçadas! Três guardas caem! Você está LIVRE... mas ferido mortalmente. Sangue JORRA. Você tem minutos.',
+        options: [
+            {
+                text: 'CORRO! Busco ajuda médica antes de morrer!',
+                points: 70,
+                feedback: 'SOBREVIVÊNCIA! Você encontra um curandeiro... a tempo!',
+                nextQuestionId: 'FINAL19-SOBREVIVENTE-FERIDO',
+                karma: { survival: +3, determination: +2 }
+            },
+            {
+                text: 'PERSIGO os traidores! Vingança antes da morte!',
+                points: 65,
+                feedback: 'FÚRIA cega! Você os alcança... e luta até o último suspiro.',
+                nextQuestionId: 'FINAL20-VINGANCA',
+                karma: { rage: +4, vengeance: +3 }
+            },
+            {
+                text: 'DEITO e aceito. Lutei bem. É hora de descansar.',
+                points: 80,
+                feedback: 'PAZ no caos. Você fecha os olhos... e algo MÁGICO acontece.',
+                nextQuestionId: 'FINAL21-RENASCIMENTO',
+                karma: { acceptance: +3, peace: +2 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q5L',
+        phase: 'cap5-negociacao',
+        badge: '💰 CAPÍTULO 5: ACORDO FINAL',
+        title: 'Dividir o Tesouro',
+        context: 'Você oferece dividir o tesouro. Os captores se entreolham. GANÂNCIA brilha nos olhos deles. "Quanto?" você pergunta. "50%", eles exigem. "Isso é muito!", você protesta. "Então morra", eles respondem. Negociação sob pressão absoluta.',
+        options: [
+            {
+                text: 'ACEITO 50/50. Melhor vivo e rico pela metade!',
+                points: 75,
+                feedback: 'PRAGMATISMO! Acordo feito. Vocês buscam o tesouro... JUNTOS.',
+                nextQuestionId: 'FINAL22-PRAGMATICO',
+                karma: { pragmatism: +3, compromise: +2 }
+            },
+            {
+                text: 'NEGOCIO: "30% pra vocês. Final."',
+                points: 70,
+                feedback: 'OUSADIA! Eles aceitam... mas planejam te TRAIR depois.',
+                nextQuestionId: 'FINAL23-TRAIDO-NOVAMENTE',
+                karma: { negotiation: +2, naivety: +1 }
+            },
+            {
+                text: 'MINTO: "Aceito 50%"... mas planejo fugir depois.',
+                points: 65,
+                feedback: 'ENGANAÇÃO! Você concorda... mas JÁ está tramando escape.',
+                nextQuestionId: 'FINAL24-TRAPACEIRO',
+                karma: { deception: +3, cunning: +2 }
+            }
+        ]
+    },
+
+    // ===== FINAIS ADICIONAIS (14-24) =====
+    
+    {
+        id: 'FINAL14-NEGOCIADOR',
+        phase: 'ending',
+        badge: '🤝 FINAL: O NEGOCIADOR',
+        title: 'Diplomacia Salvou Tudo',
+        context: 'Honestidade te salvou. Você revelou tudo e eles perceberam: você vale mais VIVO. Você vira conselheiro deles. Negocia acordos. Evita guerras. Seu talento não era luta - era DIPLOMACIA. Anos depois, você é conhecido como "O Pacificador". Salvou milhares através de palavras, não espadas. Nota: 85/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL15-BLEFADOR',
+        phase: 'ending',
+        badge: '🎭 FINAL: O Mestre do Blefe',
+        title: 'Coragem na Mentira',
+        context: 'Você blefou. Eles perceberam. Mas respeitaram a CORAGEM de mentir na cara da morte. Te libertaram dizendo: "Alguém assim é útil." Você vira espião. Mestre da enganação. Suas mentiras salvam vidas e destroem impérios. É uma vida de sombras... mas você é ESSENCIAL. Nota: 75/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL16-SOBREVIVENTE',
+        phase: 'ending',
+        badge: '🛡️ FINAL: Sobrevivente Nato',
+        title: 'Vivo Para Contar',
+        context: 'Você negociou sua liberdade. Sobreviveu. É isso que importa. Você não é herói. Não é vilão. É SOBREVIVENTE. Você vive longo, conta histórias, adverte outros sobre perigos. Sua contribuição: MEMÓRIA. Você garante que ninguém cometa os mesmos erros. Nota: 70/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL17-HONRADO',
+        phase: 'ending',
+        badge: '👑 FINAL: O Honrado',
+        title: 'Dignidade Conquistou Respeito',
+        context: 'Sua dignidade na morte conquistou algo raro: RESPEITO de inimigos. Eles te libertam e oferecem aliança. Você aceita. Juntos, vocês mudam o reino. Sua lição: honra não é fraqueza - é FORÇA. Reis podem comprar lealdade, mas apenas honra conquista DEVOÇÃO. Nota: 90/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL18-REVELACAO-FINAL',
+        phase: 'ending',
+        badge: '💡 FINAL: A Verdade Absoluta',
+        title: 'O Segredo Revelado',
+        context: 'Você perguntou por que te pouparam. A resposta TE CHOCOU: "Porque você é O PROFETIZADO. Aquele que unirá todas as facções." Era tudo planejado. O mapa, o velho, a jornada - TUDO. Você era o teste. E PASSOU. Agora começa a verdadeira missão: unir um mundo dividido. Nota: 95/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL19-SOBREVIVENTE-FERIDO',
+        phase: 'ending',
+        badge: '⚕️ FINAL: Sobreviveu Por Pouco',
+        title: 'Cicatrizes Como Medalhões',
+        context: 'Você sobreviveu... mas quase não. Cicatrizes cobrrem seu corpo. Cada uma conta uma história. Você não é mais o mesmo. PTSD te assombra. Mas você VIVE. E com o tempo, aprende: sobreviver é vitória. Cicatrizes são prova de que você LUTOU. Nota: 70/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL20-VINGANCA',
+        phase: 'ending',
+        badge: '⚔️ FINAL: Vingança Completa',
+        title: 'Justiça ou Obsessão?',
+        context: 'Você perseguiu. Lutou. VENCEU. Seus traidores estão mortos. Vingança completa. Mas... você está vazio. A raiva que te moveu... sumiu. E agora? Você vive sem propósito, assombrado pelos que matou. Vingança satisfaz por segundos, depois te CONSOME. Nota: 60/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL21-RENASCIMENTO',
+        phase: 'ending',
+        badge: '🌅 FINAL: Renascimento Mágico',
+        title: 'Além da Morte',
+        context: 'Você aceitou a morte... e algo MILAGROSO aconteceu. Uma luz te envolveu. Suas feridas CURARAM. Você renasceu - literalmente. Mais forte. Sábio. Com PODERES. Aparentemente, aceitar a morte TE TRANSCENDEU. Você não é mais humano. É algo... ALÉM. Nova vida começa. Nota: 100/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL22-PRAGMATICO',
+        phase: 'ending',
+        badge: '💼 FINAL: O Pragmático',
+        title: 'Meio Tesouro, Vida Inteira',
+        context: 'Você dividiu 50/50. É pragmatismo puro. Você vive RICO (pela metade), tem aliados poderosos, evitou morte. Não é o final épico... mas é REAL. Você constrói um império comercial com sua metade. Vive confortável até velho. Pragmatismo vence idealismo. Nota: 75/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL23-TRAIDO-NOVAMENTE',
+        phase: 'ending',
+        badge: '💔 FINAL: Traído Duas Vezes',
+        title: 'Ingenuidade Punida',
+        context: 'Você negociou 30%... e eles te TRAÍRAM de novo! Te deixaram sem nada. Pior: te marcaram como "traidor". Você perdeu TUDO - tesouro, reputação, aliados. Aprende a lição mais dura: nem todos jogam limpo. Confiança sem cautela é INGENUIDADE. Nota: 40/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL24-TRAPACEIRO',
+        phase: 'ending',
+        badge: '🦊 FINAL: Trapaceiro Mestre',
+        title: 'Enganou os Enganadores',
+        context: 'Você concordou em dividir... mas FUGIU com tudo! Enganou os enganadores! Agora você é rico E livre! Mas... sempre olhando pra trás. Sempre com medo. Riqueza com paranoia. Você vive bem mas NUNCA em paz. Trapacear tem custos invisíveis. Nota: 65/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL4-REJEITADO',
+        phase: 'ending',
+        badge: '🚫 FINAL: O Rejeitado',
+        title: 'Expulso do Vazio',
+        context: 'Você recusou as regras do vazio. Rebeldia te custou caro. O vazio te EJETOU violentamente de volta ao mundo. Você desperta... sem memórias. Sem poderes. Apenas confusão. Passou por tudo... e perdeu tudo. Às vezes rebeldia é apenas teimosia. Nota: 55/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL5-TRANSCENDENTE',
+        phase: 'ending',
+        badge: '✨ FINAL: O Transcendente',
+        title: 'Além da Humanidade',
+        context: 'Você usou o dispositivo. TRANSFORMAÇÃO! Emoções... desaparecem. Dor... some. Alegria... evapora. Você vira LÓGICA PURA. Imortal. Poderoso. Perfeito. Mas... vazio. Você salvou o mundo mil vezes depois. Mas nunca mais SENTIU nada. Transcendência ou prisão? Nota: 70/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL7-GUARDIAO-CONHECIMENTO',
+        phase: 'ending',
+        badge: '📚 FINAL: Guardião do Conhecimento',
+        title: 'Responsabilidade Eterna',
+        context: 'Você guardou o dispositivo sem usar nem destruir. Responsabilidade suprema. Você vira guardião do conhecimento mais perigoso. Vive escondido, protegendo-o de todos - bons e ruins. É solidão eterna... mas NECESSÁRIA. Alguém tem que fazer isso. Nota: 85/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL8-SILENCIOSO',
+        phase: 'ending',
+        badge: '🤐 FINAL: O Silencioso',
+        title: 'Segredo Enterrado',
+        context: 'Você fugiu e selou a entrada. O dispositivo está enterrado para sempre. Ninguém nunca saberá. Você vive vida normal, mas carrega peso invisível: você SABE. Conhecimento que não pode compartilhar. É solitário... mas o mundo está mais seguro. Nota: 80/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL9-GUARDIAO-PRESO',
+        phase: 'ending',
+        badge: '⛓️ FINAL: Prisioneiro Eterno',
+        title: 'Sacrifício Absoluto',
+        context: 'Você aceitou virar guardião eterno em troca de conhecimento. Você está PRESO na cidade subterrânea para sempre. Nunca mais verá o sol. Nunca mais tocará alguém. Mas você SABE tudo. É o sacrifício final: liberdade por sabedoria. Nota: 75/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL10-ESCAPOU',
+        phase: 'ending',
+        badge: '🏃 FINAL: A Grande Fuga',
+        title: 'Liberdade Conquistada',
+        context: 'Sua recusa QUEBROU a maldição! A cidade se iluminou! Caminho apareceu! Você ESCAPOU! Liberdade vale mais que qualquer conhecimento. Você vive livre, sem arrependimentos. Provou que força de vontade vence qualquer prisão. Nota: 90/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL11-SERVO-TEMPORAL',
+        phase: 'ending',
+        badge: '⏳ FINAL: Servo por 100 Anos',
+        title: 'Paciência Suprema',
+        context: 'Você negociou: 100 anos de serviço, depois liberdade. É longo... mas finito. Você serve. Aprende. Cresce. Após 100 anos, você é libertado - mais sábio, mais poderoso, imortal. Paciência extrema te recompensou além de expectativas. Nota: 85/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL12-REUNIAO',
+        phase: 'ending',
+        badge: '👨‍👦 FINAL: Reunião com o Pai',
+        title: 'Amor Que Nunca Morreu',
+        context: 'Alguém te salvou... o VELHO! Seu PAI! "Eu sempre volto, filho..." Ele explica TUDO. Por que te abandonou. Por que fingiu morrer. Tudo foi para PROTEGER você. Vocês se abraçam. Lágrimas. Você tem pai de novo. E juntos, vocês mudam o mundo. Nota: 95/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL13-REVELACAO',
+        phase: 'ending',
+        badge: '🎭 FINAL: A Verdade Oculta',
+        title: 'Quem Te Salvou',
+        context: 'Seu salvador revela identidade: é VOCÊ DO FUTURO! Viagem no tempo existe. Você voltou para salvar seu eu passado. "Você vai entender em breve", ele diz e desaparece. Agora você sabe: sua jornada está apenas COMEÇANDO. Nota: 90/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL25-SERVO-DO-REI',
+        phase: 'ending',
+        badge: '👑 FINAL: Servo da Tirania',
+        title: 'Lealdade Cega',
+        context: 'Você serviu o Rei fielmente. Ele usou a arma. Conquistou reinos. Matou milhões. Você foi cúmplice. Anos depois, você se aposenta rico... mas assombrado por rostos dos mortos. Lealdade sem discernimento é cumplicidade. Nota: 45/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL26-REDENTOR',
+        phase: 'ending',
+        badge: '🌟 FINAL: Redenção Heroica',
+        title: 'Corrigindo Erros',
+        context: 'Você reconheceu seu erro e CORRIGIU! Roubou a chave de volta e destruiu! Custou sua vida... mas salvou milhões. Redenção é possível. Não importa o quão fundo você caiu - você pode SUBIR. Seu sacrifício te imortalizou como herói. Nota: 95/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL27-EXILADO',
+        phase: 'ending',
+        badge: '🏝️ FINAL: Exílio Pacífico',
+        title: 'Paz Longe de Tudo',
+        context: 'Você fugiu para terras distantes. Novo nome. Nova vida. Simples. Humilde. Pescador. Fazendeiro. Anônimo. Mas você dorme em paz. Fez o certo. Sacrificou tudo - fama, poder, riqueza - pela consciência tranquila. É a vitória mais silenciosa. Nota: 85/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL-MARTIR',
+        phase: 'ending',
+        badge: '⚔️ FINAL: O Mártir',
+        title: 'Morte Heroica',
+        context: 'Você enfrentou todos sozinho. Morreu lutando. Mas sua morte INSPIROU revolução. Gerações contam sua história. Você vive eternamente na memória coletiva. Mártires nunca morrem - eles viram SÍMBOLOS. Sua morte salvou mais vidas que sua vida jamais poderia. Nota: 90/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL-VAZIO',
+        phase: 'ending',
+        badge: '⚫ FINAL: O Vazio',
+        title: 'Ganância Punida',
+        context: 'Você escolheu ganância. Agora você tem ouro... e vazio. Todas as noites, você vê rostos dos que morreram porque você vendeu poder. Riqueza não compra paz de espírito. Você vive rico e miserável. Lição aprendida tarde demais. Nota: 30/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL-CULPA',
+        phase: 'ending',
+        badge: '💔 FINAL: O Peso da Culpa',
+        title: 'Decisões e Consequências',
+        context: 'Você mentiu. Se salvou. Mas outros pagaram. Inocentes morreram no seu lugar. Você vive... mas culpa te devora. Toda noite é pesadelo. Todo espelho mostra covarde. Sobrevivência a qualquer custo... tem custos invisíveis. Nota: 35/100.',
+        options: []
+    },
+
+    {
+        id: 'FINAL-SUICIDIO',
+        phase: 'ending',
+        badge: '🥀 FINAL: Desespero Final',
+        title: 'Quando a Culpa Vence',
+        context: 'Você não conseguiu viver com o que fez. Tirou a própria vida. É o final mais triste. Sua morte não desfaz seus erros. Não salva ninguém. Apenas adiciona mais uma tragédia. Se você está pensando nisso na vida real: BUSQUE AJUDA. Há sempre outro caminho. CVV: 188. Nota: 10/100.',
         options: []
     },
 
