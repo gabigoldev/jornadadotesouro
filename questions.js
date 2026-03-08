@@ -74,14 +74,14 @@ const journeyQuestions = [
                 text: 'Sigo a guerreira em segredo. Se ela pode, eu também posso - não preciso do velho!',
                 points: 60,
                 feedback: 'Independência ou orgulho? Você parte sozinho, sem bênção nem guia...',
-                nextQuestionId: 'Q2-SOLITARIO', // Caminho solo (mais difícil)
+                nextQuestionId: 'Q2-GUERREIRO', // Caminho solo (mais difícil)
                 karma: { pride: +1, courage: +1 }
             },
             {
                 text: 'Aproximo do velho e digo: "Não quero o mapa. Quero aprender com VOCÊ. Posso ser seu aprendiz?"',
                 points: 95,
                 feedback: 'O velho se SURPREENDE. "Em 40 anos, você é o primeiro a pedir isso..." Sabedoria profunda!',
-                nextQuestionId: 'Q2-APRENDIZ', // Caminho secreto especial!
+                nextQuestionId: 'Q2-SABIO', // Caminho secreto especial!
                 karma: { wisdom: +3, humility: +1 }
             }
         ]
@@ -123,8 +123,46 @@ const journeyQuestions = [
                 text: 'O livro de MAGIA - "Há forças além da razão. Ignorá-las é arrogância."',
                 points: 75,
                 feedback: 'Você aprende feitiços básicos. Poder... mas a que custo?',
-                nextQuestionId: 'Q3-SABIO-MAGIA', // Variação especial
+                nextQuestionId: 'Q4-SABIO', // Variação especial
                 karma: { wisdom: +1, magic: +2 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q3-CURANDEIRO',
+        phase: 'teste-curandeiro',
+        badge: '🌿 PRIMEIRA CURA',
+        title: 'A Aldeia Doente',
+        context: 'Você chega a uma aldeia onde 30 pessoas estão doentes com febre alta. Suas ervas podem salvar 10 pessoas completamente OU aliviar os sintomas de todas as 30 (mas sem cura total). O que você faz?',
+        options: [
+            {
+                text: 'Salvo 10 completamente. Melhor salvar alguns do que aliviar todos sem curar.',
+                points: 75,
+                feedback: 'Pragmatismo. As 10 sobrevivem, as outras 20 sofrem mais tempo.',
+                nextQuestionId: 'Q4-CURANDEIRO',
+                karma: { pragmatism: +1, compassion: +1 }
+            },
+            {
+                text: 'Alivio os sintomas de TODOS. Distribuir esperança é importante.',
+                points: 80,
+                feedback: 'Compaixão! Todos se sentem melhor, ninguém se sente abandonado.',
+                nextQuestionId: 'Q4-CURANDEIRO',
+                karma: { compassion: +2 }
+            },
+            {
+                text: 'Ensino os aldeões a fazer o remédio com plantas locais.',
+                points: 95,
+                feedback: 'SABEDORIA! Você ensina a pescar, não dá o peixe. Impacto de longo prazo!',
+                nextQuestionId: 'Q4-CURANDEIRO',
+                karma: { wisdom: +3, teaching: +1 }
+            },
+            {
+                text: 'Guardo as ervas. Posso encontrar situação pior adiante.',
+                points: 40,
+                feedback: 'Egoísmo. Os aldeões te olham com desprezo. 5 morrem na noite.',
+                nextQuestionId: 'Q4-CURANDEIRO',
+                karma: { compassion: -2, pragmatism: +1 }
             }
         ]
     },
@@ -154,14 +192,14 @@ const journeyQuestions = [
                 text: 'Tento contornar o portão. Perguntas são armadilhas - há sempre outro caminho.',
                 points: 60,
                 feedback: 'Você encontra um caminho lateral... mas perdeu uma lição importante.',
-                nextQuestionId: 'Q4-SABIO-ATALHO',
+                nextQuestionId: 'Q5-SABIO',
                 karma: { pragmatism: +1 }
             },
             {
                 text: 'Pergunto ao portão: "E se EU fizer três perguntas para VOCÊ primeiro?"',
                 points: 100,
                 feedback: 'O guardião RI alto! "GENIAL! Ninguém nunca tentou isso!" Você passou com honras especiais!',
-                nextQuestionId: 'Q4-SABIO-ESPECIAL', // Rota de honra
+                nextQuestionId: 'Q5-SABIO', // Rota de honra
                 karma: { wisdom: +3, creativity: +2 }
             }
         ]
@@ -203,7 +241,7 @@ const journeyQuestions = [
                 text: 'Arco e Flechas - Mantenho distância. Inteligência tática supera coragem cega.',
                 points: 85,
                 feedback: 'Sabedoria de guerreiro! "Verdadeiros mestres escolhem onde lutar..."',
-                nextQuestionId: 'Q3-GUERREIRO-ARQUEIRO', // Variação especial
+                nextQuestionId: 'Q4-GUERREIRO', // Variação especial
                 karma: { courage: +1, tactics: +2 }
             }
         ]
@@ -220,14 +258,14 @@ const journeyQuestions = [
                 text: 'Mato o lobo rapidamente - é um ato de misericórdia. E pego os filhotes.',
                 points: 40,
                 feedback: 'Eficiente, mas... os filhotes choram. Algo em você se apaga um pouco.',
-                nextQuestionId: 'Q4-GUERREIRO-CRUEL',
+                nextQuestionId: 'Q5-GUERREIRO',
                 karma: { courage: +1, compassion: -1 }
             },
             {
                 text: 'Retiro a armadilha e cuido da ferida. Se ele me atacar depois, que ataque.',
                 points: 95,
                 feedback: 'Risco enorme... mas o lobo ENTENDE. Ele lambe sua mão. Você fez um aliado improvável.',
-                nextQuestionId: 'Q4-GUERREIRO-NOBRE',
+                nextQuestionId: 'Q5-GUERREIRO',
                 karma: { courage: +2, compassion: +2, animals: +1 }
             },
             {
@@ -241,7 +279,7 @@ const journeyQuestions = [
                 text: 'Retiro a armadilha, cuido dele E levo os filhotes para criá-los. Família merece viver.',
                 points: 85,
                 feedback: 'Compaixão extrema... mas agora você tem 4 lobos na jornada. Complicado, mas honrado.',
-                nextQuestionId: 'Q4-GUERREIRO-MATILHA', // Rota especial com lobos!
+                nextQuestionId: 'Q5-GUERREIRO', // Rota especial com lobos!
                 karma: { courage: +1, compassion: +3, responsibility: +1 }
             }
         ]
@@ -283,7 +321,7 @@ const journeyQuestions = [
                 text: 'Empresto as 100 moedas com JUROS para outros viajantes. Que trabalhem por MIM!',
                 points: 85,
                 feedback: 'Pensamento de INVESTIDOR! Você cria renda passiva. Ousado... muito ousado.',
-                nextQuestionId: 'Q3-MERCADOR-INVESTIDOR', // Rota especial
+                nextQuestionId: 'Q4-MERCADOR', // Rota especial
                 karma: { pragmatism: +2, greed: +1 }
             }
         ]
@@ -307,14 +345,14 @@ const journeyQuestions = [
                 text: 'Dou 50 moedas como PRESENTE. Ele fica com o medalhão. Carma tem valor.',
                 points: 90,
                 feedback: 'Generosidade rara! O homem MEMORIZA SEU ROSTO. "Pagarei essa dívida..."',
-                nextQuestionId: 'Q4-MERCADOR-ALIADO', // Ele volta depois!
+                nextQuestionId: 'Q5-MERCADOR', // Ele volta depois!
                 karma: { pragmatism: -1, compassion: +3, reputation: +1 }
             },
             {
                 text: 'Proponho SOCIEDADE: uso minhas 50 moedas para nós dois. Lucros 50/50.',
                 points: 95,
                 feedback: 'WIN-WIN! Ele aceita emocionado. Você ganhou um PARCEIRO de negócios!',
-                nextQuestionId: 'Q4-MERCADOR-PARCEIRO', // Rota com parceiro!
+                nextQuestionId: 'Q5-MERCADOR', // Rota com parceiro!
                 karma: { pragmatism: +2, collaboration: +2 }
             },
             {
@@ -342,28 +380,28 @@ const journeyQuestions = [
                 text: 'Uso TODAS as ervas para salvar a criança. Vida vem primeiro, sempre.',
                 points: 100,
                 feedback: 'A criança se cura! Os pais te dão bênçãos. Você parte sem remédios, mas com propósito.',
-                nextQuestionId: 'Q3-CURANDEIRO-VAZIO',
+                nextQuestionId: 'Q4-CURANDEIRO',
                 karma: { compassion: +3, sacrifice: +1 }
             },
             {
                 text: 'Uso METADE das ervas. Salvo a criança, mas mantenho reservas.',
                 points: 80,
                 feedback: 'Equilíbrio sábio. A criança melhora devagar, mas você mantém recursos.',
-                nextQuestionId: 'Q3-CURANDEIRO',
+                nextQuestionId: 'Q4-CURANDEIRO',
                 karma: { compassion: +2, wisdom: +1 }
             },
             {
                 text: 'Ensino os pais a fazer o remédio. Dou as ervas, mas compartilho CONHECIMENTO.',
                 points: 95,
                 feedback: 'SABEDORIA PROFUNDA! "Dê peixe, alimente um dia. Ensine a pescar..." Você impacta gerações!',
-                nextQuestionId: 'Q3-CURANDEIRO-MESTRE', // Rota de mestre
+                nextQuestionId: 'Q4-CURANDEIRO', // Rota de mestre
                 karma: { compassion: +2, wisdom: +3, teaching: +1 }
             },
             {
                 text: 'Guardo as ervas. A jornada é perigosa - talvez encontre algo pior depois.',
                 points: 40,
                 feedback: 'A criança morre na noite seguinte. O peso da culpa te segue...',
-                nextQuestionId: 'Q3-CURANDEIRO-CULPA',
+                nextQuestionId: 'Q4-CURANDEIRO',
                 karma: { compassion: -2, pragmatism: +1, guilt: +1 }
             }
         ]
@@ -404,7 +442,7 @@ const journeyQuestions = [
                 text: 'RECUSO escolher. O futuro não é pré-determinado - minhas ações CRIAM meu futuro.',
                 points: 100,
                 feedback: 'FILOSOFIA PROFUNDA! O espelho se QUEBRA e te liberta do destino. Livre arbítrio total!',
-                nextQuestionId: 'Q5-SABIO-LIVRE', // Rota especial
+                nextQuestionId: 'Q6-SABIO', // Rota especial
                 karma: { wisdom: +3, freedom: +1 }
             }
         ]
@@ -428,21 +466,21 @@ const journeyQuestions = [
                 text: 'Luto SOZINHO contra os bandidos na calada da noite. Ataque surpresa!',
                 points: 80,
                 feedback: 'Heroísmo puro! Você elimina metade dos bandidos. Os outros fogem. LENDÁRIO!',
-                nextQuestionId: 'Q5-GUERREIRO-HEROI',
+                nextQuestionId: 'Q6-GUERREIRO',
                 karma: { courage: +3, reputation: +1 }
             },
             {
                 text: 'TREINO os aldeões por 48h. Ensino técnicas básicas. Unidos, eles podem vencer!',
                 points: 95,
                 feedback: 'SABEDORIA DE LÍDER! Você cria um EXÉRCITO. A vila se defende sozinha depois!',
-                nextQuestionId: 'Q5-GUERREIRO-MESTRE',
+                nextQuestionId: 'Q6-GUERREIRO',
                 karma: { courage: +2, leadership: +3, teaching: +1 }
             },
             {
                 text: 'Negocio com os bandidos: "Me deixem passar e não interfiro. Vocês atacam DEPOIS que eu sair."',
                 points: 20,
                 feedback: 'Covarde... Os aldeões te olham com desprezo. Você segue em vergonha.',
-                nextQuestionId: 'Q5-GUERREIRO-VERGONHA',
+                nextQuestionId: 'Q6-GUERREIRO',
                 karma: { courage: -2, pragmatism: +1, shame: +1 }
             }
         ]
@@ -466,21 +504,21 @@ const journeyQuestions = [
                 text: 'Pego apenas o essencial para sobreviver e sigo buscando os donos.',
                 points: 85,
                 feedback: 'Integridade rara! Você encontra a família escondida. Eles oferecem 50% como recompensa!',
-                nextQuestionId: 'Q5-MERCADOR-HONESTO',
+                nextQuestionId: 'Q6-MERCADOR',
                 karma: { integrity: +3, compassion: +1 }
             },
             {
                 text: 'GUARDO tudo em local seguro e deixo sinais para os donos encontrarem.',
                 points: 95,
                 feedback: 'GENIAL! Você cria um "cofre" e marca o caminho. Quando os donos voltam, te fazem sócio!',
-                nextQuestionId: 'Q5-MERCADOR-SOCIO', // Ganha parceiros poderosos!
+                nextQuestionId: 'Q6-MERCADOR', // Ganha parceiros poderosos!
                 karma: { integrity: +2, wisdom: +2, collaboration: +1 }
             },
             {
                 text: 'Vendo tudo rapidamente no mercado negro. Maximizo lucro antes que alguém reclame.',
                 points: 40,
                 feedback: 'Dinheiro rápido... mas você cria INIMIGOS. A família nunca esquece...',
-                nextQuestionId: 'Q5-MERCADOR-INIMIGOS', // Consequências futuras!
+                nextQuestionId: 'Q6-MERCADOR', // Consequências futuras!
                 karma: { pragmatism: +1, greed: +1, reputation: -2 }
             }
         ]
@@ -497,28 +535,28 @@ const journeyQuestions = [
                 text: 'Salvo o SOLDADO. Ele tem família que depende dele. Vida de pai vale mais.',
                 points: 90,
                 feedback: 'Compaixão pura. O velho morre em paz vendo sua escolha. "Você escolheu bem..."',
-                nextQuestionId: 'Q5-CURANDEIRO-PAI',
+                nextQuestionId: 'Q6-CURANDEIRO',
                 karma: { compassion: +3, sacrifice: +1 }
             },
             {
                 text: 'Salvo o VELHO. O conhecimento dele pode salvar MUITOS no futuro.',
                 points: 75,
                 feedback: 'Pragmatismo filosófico. O soldado morre... mas o velho te ensina segredos valiosos.',
-                nextQuestionId: 'Q5-CURANDEIRO-SABIO',
+                nextQuestionId: 'Q6-CURANDEIRO',
                 karma: { wisdom: +2, pragmatism: +1 }
             },
             {
                 text: 'Divido o remédio. Talvez ambos sobrevivam com metade da dose...',
                 points: 60,
                 feedback: 'Tentativa desesperada... Ambos sobrevivem PRECARIAMENTE. Você adiou o problema.',
-                nextQuestionId: 'Q5-CURANDEIRO-AMBOS', // Você tem que cuidar dos dois agora!
+                nextQuestionId: 'Q6-CURANDEIRO', // Você tem que cuidar dos dois agora!
                 karma: { compassion: +2, burden: +1 }
             },
             {
                 text: 'Uso TODO o remédio em MIM e fujo. Não posso morrer aqui tentando salvar outros!',
                 points: 10,
                 feedback: 'Egoísmo brutal. Você vive... mas é assombrado por essa escolha para sempre.',
-                nextQuestionId: 'Q5-CURANDEIRO-EGOISTA',
+                nextQuestionId: 'Q6-CURANDEIRO',
                 karma: { compassion: -3, survival: +1, trauma: +1 }
             }
         ]
@@ -551,7 +589,7 @@ const journeyQuestions = [
                 text: 'Digo: "Vi algo, mas estava escuro. Não tenho certeza se era ela." Verdade ambígua.',
                 points: 95,
                 feedback: 'SABEDORIA! Tecnicamente verdade, mas protege a criança. Você enganou sem mentir!',
-                nextQuestionId: 'Q6-SABIO-MESTRE',
+                nextQuestionId: 'Q7-SABIO',
                 karma: { wisdom: +3, cleverness: +2 }
             },
             {
@@ -584,7 +622,7 @@ const journeyQuestions = [
                 text: 'Proponho: "Ao invés de lutar, me ensine. Pagarei com trabalho."',
                 points: 90,
                 feedback: 'Humildade guerreira! Ele fica impressionado e te aceita como aluno. Você ganha um MESTRE!',
-                nextQuestionId: 'Q6-GUERREIRO-MESTRE',
+                nextQuestionId: 'Q7-GUERREIRO',
                 karma: { humility: +2, wisdom: +2 }
             },
             {
@@ -598,7 +636,7 @@ const journeyQuestions = [
                 text: 'Desafio: "Que tal uma aposta? Se eu vencer, você ME paga 100 moedas."',
                 points: 95,
                 feedback: 'OUSADIA MÁXIMA! Ele aceita achando fácil. Você vence e fica RICO + famoso!',
-                nextQuestionId: 'Q6-GUERREIRO-CAMPEAO',
+                nextQuestionId: 'Q7-GUERREIRO',
                 karma: { courage: +2, cleverness: +2, wealth: +1 }
             }
         ]
@@ -622,21 +660,21 @@ const journeyQuestions = [
                 text: 'Vendo pelo preço NORMAL, ignorando a alta. Justiça acima de lucro.',
                 points: 85,
                 feedback: 'Integridade rara! As famílias te veneram. Você perde lucro, mas ganha ALIADOS poderosos.',
-                nextQuestionId: 'Q6-MERCADOR-HEROI',
+                nextQuestionId: 'Q7-MERCADOR',
                 karma: { integrity: +3, compassion: +2, allies: +1 }
             },
             {
                 text: 'DOO metade para os pobres, vendo a outra metade com lucro moderado.',
                 points: 95,
                 feedback: 'EQUILÍBRIO PERFEITO! Você lucra 2500 moedas E é visto como herói. Win-win total!',
-                nextQuestionId: 'Q6-MERCADOR-EQUILIBRIO',
+                nextQuestionId: 'Q7-MERCADOR',
                 karma: { wisdom: +2, compassion: +2, pragmatism: +1 }
             },
             {
                 text: 'Crio um sistema de CRÉDITO: famílias pagam depois, quando puderem.',
                 points: 90,
                 feedback: 'INOVAÇÃO FINANCEIRA! Você inventa "crédito social". Todas pagam com juros baixos. Genial!',
-                nextQuestionId: 'Q6-MERCADOR-INVENTOR',
+                nextQuestionId: 'Q7-MERCADOR',
                 karma: { wisdom: +3, innovation: +2 }
             }
         ]
@@ -660,21 +698,21 @@ const journeyQuestions = [
                 text: 'Trabalho 30 dias SEM PARAR produzindo remédio para todos. Salvo 1000!',
                 points: 95,
                 feedback: 'SACRIFÍCIO HEROICO! Você quase morre de exaustão, mas salva TODOS. Lendário!',
-                nextQuestionId: 'Q6-CURANDEIRO-HEROI',
+                nextQuestionId: 'Q7-CURANDEIRO',
                 karma: { compassion: +3, sacrifice: +2, health: -1 }
             },
             {
                 text: 'ENSINO a receita para 50 curandeiros. Juntos, produzimos rápido!',
                 points: 100,
                 feedback: 'SABEDORIA SUPREMA! Trabalho em equipe salva 950 pessoas em 10 dias. PERFEITO!',
-                nextQuestionId: 'Q6-CURANDEIRO-MESTRE',
+                nextQuestionId: 'Q7-CURANDEIRO',
                 karma: { wisdom: +3, collaboration: +3, teaching: +1 }
             },
             {
                 text: 'Vendo a cura por preço alto. Só os ricos sobrevivem - é cruel, mas realista.',
                 points: 20,
                 feedback: 'Ganância monstruosa. Você fica rico... mas 950 morrem. A cidade te odeia eternamente.',
-                nextQuestionId: 'Q6-CURANDEIRO-VILAO',
+                nextQuestionId: 'Q7-CURANDEIRO',
                 karma: { compassion: -3, greed: +2, reputation: -3 }
             }
         ]
@@ -700,7 +738,7 @@ const journeyQuestions = [
                 text: 'DIVULGO a verdade. Pessoas merecem saber, mesmo que doa.',
                 points: 85,
                 feedback: 'Honestidade brutal. Muitos ficam furiosos... mas alguns AGRADECEM pela libertação.',
-                nextQuestionId: 'Q7-SABIO-VERDADE',
+                nextQuestionId: 'Q8-SABIO',
                 karma: { integrity: +3, courage: +1 }
             },
             {
@@ -714,7 +752,7 @@ const journeyQuestions = [
                 text: 'QUESTIONO o livro: "E se ESTE livro for o teste? A verdadeira ilusão?"',
                 points: 100,
                 feedback: 'META-SABEDORIA! Você entendeu: até a "verdade absoluta" pode ser relativa. Iluminação!',
-                nextQuestionId: 'Q7-SABIO-ILUMINADO',
+                nextQuestionId: 'Q8-SABIO',
                 karma: { wisdom: +5, transcendence: +2 }
             }
         ]
@@ -731,28 +769,28 @@ const journeyQuestions = [
                 text: 'Aceito me juntar ao exército. Não posso vencer - melhor sobreviver.',
                 points: 30,
                 feedback: 'Covardia. Você vive... mas o peso de 100 famílias mortas te assombra para sempre.',
-                nextQuestionId: 'Q7-GUERREIRO-SOMBRA',
+                nextQuestionId: 'Q8-GUERREIRO',
                 karma: { courage: -2, survival: +1, trauma: +2 }
             },
             {
                 text: 'LUTO até a morte. Vou morrer, mas morrerei com honra!',
                 points: 90,
                 feedback: 'HEROÍSMO ÉPICO! Você luta bravamente e... MILAGRE! Reforços chegam. Você sobrevive como LENDA!',
-                nextQuestionId: 'Q7-GUERREIRO-LENDA',
+                nextQuestionId: 'Q8-GUERREIRO',
                 karma: { courage: +5, honor: +3, reputation: +3 }
             },
             {
                 text: 'Desafio o LÍDER para duelo 1v1. "Honra de guerreiro - se eu vencer, vocês recuam."',
                 points: 95,
                 feedback: 'TÁTICA GENIAL! O líder aceita por honra. Você vence o duelo e o exército RECUA!',
-                nextQuestionId: 'Q7-GUERREIRO-MESTRE',
+                nextQuestionId: 'Q8-GUERREIRO',
                 karma: { courage: +3, tactics: +3, honor: +2 }
             },
             {
                 text: 'Negocio: "Deixem o vilarejo em paz. Levem-me como refém no lugar deles."',
                 points: 85,
                 feedback: 'SACRIFÍCIO NOBRE! Eles aceitam. Você salva 100 famílias trocando sua liberdade.',
-                nextQuestionId: 'Q7-GUERREIRO-CATIVO',
+                nextQuestionId: 'Q8-GUERREIRO',
                 karma: { courage: +2, sacrifice: +3, compassion: +2 }
             }
         ]
@@ -769,7 +807,7 @@ const journeyQuestions = [
                 text: 'Invisto TUDO. Alto risco, alto retorno - assim se faz fortuna!',
                 points: 70,
                 feedback: 'Ousadia! O projeto É legítimo. Você fica BILIONÁRIO. Mas poderia ter perdido tudo...',
-                nextQuestionId: 'Q7-MERCADOR-BILIONARIO',
+                nextQuestionId: 'Q8-MERCADOR',
                 karma: { courage: +2, wealth: +3, risk: +1 }
             },
             {
@@ -790,7 +828,7 @@ const journeyQuestions = [
                 text: 'Investigo PRIMEIRO. "Me dê 1 semana para auditar o projeto, aí decido."',
                 points: 95,
                 feedback: 'DUE DILIGENCE! Você descobre que é GOLPE antes de perder nada. Mestre dos negócios!',
-                nextQuestionId: 'Q7-MERCADOR-MESTRE',
+                nextQuestionId: 'Q8-MERCADOR',
                 karma: { wisdom: +4, analysis: +2 }
             }
         ]
@@ -814,7 +852,7 @@ const journeyQuestions = [
                 text: 'Salvo ele, mas digo: "Você deve isso a MINHA família. Viva fazendo o bem."',
                 points: 95,
                 feedback: 'PERDÃO PROFUNDO! Ele chora, transformado. Anos depois, ele salva milhares em sua honra.',
-                nextQuestionId: 'Q7-CURANDEIRO-SANTO',
+                nextQuestionId: 'Q8-CURANDEIRO',
                 karma: { compassion: +5, forgiveness: +3, healing: +2 }
             },
             {
@@ -828,7 +866,7 @@ const journeyQuestions = [
                 text: 'Deixo ELE escolher: "Te curo, mas você terá que viver com a culpa. Ou morra em paz."',
                 points: 85,
                 feedback: 'Sabedoria profunda. Ele ESCOLHE viver e dedicar a vida a corrigir seus erros. Poderoso.',
-                nextQuestionId: 'Q7-CURANDEIRO-SABIO',
+                nextQuestionId: 'Q8-CURANDEIRO',
                 karma: { wisdom: +3, compassion: +2 }
             }
         ]
