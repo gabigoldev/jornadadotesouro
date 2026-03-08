@@ -1,1144 +1,767 @@
-// ===== SISTEMA HIERÁRQUICO REVOLUCIONÁRIO =====
-// Cada ID conta a história completa: Q1-C-B-A = Guerreiro → Arco → Salvar Lobo → Parceria
-// 
-// LEGENDA DE CAMINHOS PRINCIPAIS:
-// Q1-A = Cautela/Recusa (caminho da humildade forçada)
-// Q1-B = Sabedoria (caminho do conhecimento)
-// Q1-C = Coragem (caminho do guerreiro)
-// Q1-D = Pragmatismo (caminho do mercador)
+// ===== JORNADA DO TESOURO DAS ALMAS - 80+ QUESTÕES =====
+// 5 CAPÍTULOS ÉPICOS COM CONVERGÊNCIAS NARRATIVAS
+// Estrutura: Q1 → Q2A/B/C → Q3A1/A2/A3/B1/B2/B3/C1/C2/C3 → Q4A/B/C → Q5... → FINAIS
+//
+// SENTIMENTOS: Tensão, Medo, Sede, Fome, Alegria, Dúvida, Vontade, Desespero
+// REVIRAVOLTAS: Traições, Mortes, Ressurreições, Segredos
 
 const journeyQuestions = [
+    
     // ========================================
-    // Q1 - INÍCIO UNIVERSAL
+    // CAPÍTULO 1: O CHAMADO
     // ========================================
-    {
-        id: 'Q1',
-        phase: 'início',
-        badge: '🗺️ O CHAMADO',
-        title: 'O Velho Sábio e o Mapa Sangrento',
-        context: 'Na praça da vila, um velho de olhos penetrantes te entrega um mapa manchado de sangue. "Este mapa leva ao Tesouro das Almas - muitos partiram, poucos retornaram, nenhum voltou o mesmo." Suas mãos tremem. O que você faz?',
-        options: [
-            {
-                text: 'Recuso. Isso parece perigoso demais.',
-                points: 20,
-                feedback: 'Cautela... mas o destino tem outros planos.',
-                nextQuestionId: 'Q1-A',
-                karma: { caution: +1 }
-            },
-            {
-                text: 'Pergunto: "Por que EU? O que você sabe sobre mim?"',
-                points: 85,
-                feedback: 'Sabedoria! Fazer perguntas é o primeiro passo.',
-                nextQuestionId: 'Q1-B',
-                karma: { wisdom: +2 }
-            },
-            {
-                text: 'Aceito! "Quando começo? Há inimigos?"',
-                points: 70,
-                feedback: 'Coragem pura! Um guerreiro nato.',
-                nextQuestionId: 'Q1-C',
-                karma: { courage: +2 }
-            },
-            {
-                text: 'Analiso: "Vale quanto? É divisível?"',
-                points: 65,
-                feedback: 'Pragmatismo. Mente de mercador.',
-                nextQuestionId: 'Q1-D',
-                karma: { pragmatism: +2 }
-            }
-        ]
-    },
-
-    // ========================================
-    // Q1-A - CAMINHO DA CAUTELA (Recusou)
-    // ========================================
-    {
-        id: 'Q1-A',
-        phase: 'cautela-1',
-        badge: '🏠 PRIMEIRA RECUSA',
-        title: 'O Arrependimento Cresce',
-        context: 'Você recusou o mapa. Três meses depois, você sonha com ele toda noite. Na praça, vê o velho dar um mapa para uma jovem guerreira. Ela parte animada. Você sente... inveja?',
-        options: [
-            {
-                text: 'Corro e IMPLORO: "Me dê uma chance!"',
-                points: 75,
-                feedback: 'Humildade! Admitir erro é força.',
-                nextQuestionId: 'Q1-A-A',
-                karma: { humility: +2 }
-            },
-            {
-                text: 'Aceito minha escolha e volto pra casa.',
-                points: 30,
-                feedback: 'Você tenta... mas o DESTINO não aceita.',
-                nextQuestionId: 'Q1-A-B',
-                karma: { resignation: +1 }
-            },
-            {
-                text: 'Sigo a guerreira em SEGREDO.',
-                points: 60,
-                feedback: 'Orgulho misturado com coragem.',
-                nextQuestionId: 'Q1-A-C',
-                karma: { pride: +1, courage: +1 }
-            },
-            {
-                text: 'Ofereço ser APRENDIZ do velho.',
-                points: 90,
-                feedback: 'Sabedoria profunda! Ele aceita surpreso.',
-                nextQuestionId: 'Q1-A-D',
-                karma: { wisdom: +3 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-A-A',
-        phase: 'cautela-humilde',
-        badge: '❤️ SEGUNDA CHANCE',
-        title: 'O Caminho da Compaixão',
-        context: 'O velho te dá uma segunda chance. "Você voltou humilde - isso é raro. Curandeiros entendem que ajudar outros é ajudar a si mesmo." Ele te dá ervas medicinais. Como você começa?',
-        options: [
-            {
-                text: 'Uso as ervas para ajudar doentes da vila ANTES de partir.',
-                points: 95,
-                feedback: 'Generosidade! Os aldeões te abençoam.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { compassion: +3 }
-            },
-            {
-                text: 'Guardo as ervas - posso precisar na jornada.',
-                points: 60,
-                feedback: 'Pragmatismo egoísta.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { selfishness: +1 }
-            },
-            {
-                text: 'Vendo metade das ervas para comprar provisões.',
-                points: 70,
-                feedback: 'Estratégia comercial.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { pragmatism: +2 }
-            },
-            {
-                text: 'Peço ao velho para me ENSINAR antes de partir.',
-                points: 90,
-                feedback: 'Paciência e sabedoria!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +2, patience: +1 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-A-B',
-        phase: 'cautela-forçada',
-        badge: '💰 DESTINO FORÇADO',
-        title: 'A Dívida Impossível',
-        context: 'Você tenta viver em paz... mas GUARDAS batem à sua porta. "Seu pai deixou uma DÍVIDA de 1000 moedas de ouro. 30 dias ou perde TUDO." Você NÃO tem escolha agora. Precisa do tesouro!',
-        options: [
-            {
-                text: 'Procuro o velho: "PRECISO do mapa agora!"',
-                points: 70,
-                feedback: 'Desespero te motiva.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { desperation: +2 }
-            },
-            {
-                text: 'Vendo TUDO e parto sozinho.',
-                points: 75,
-                feedback: 'Sacrifício total. Determinação.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { sacrifice: +2 }
-            },
-            {
-                text: 'Busco a guerreira: "Parceria 50/50?"',
-                points: 85,
-                feedback: 'Inteligência! Ela aceita.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { collaboration: +2 }
-            },
-            {
-                text: 'Pesquiso TUDO sobre o tesouro primeiro.',
-                points: 80,
-                feedback: 'Preparação estratégica.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { strategy: +2 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-A-C',
-        phase: 'cautela-orgulhosa',
-        badge: '🚶 CAMINHO SOLO',
-        title: 'Seguindo nas Sombras',
-        context: 'Você segue a guerreira em segredo, orgulhoso demais para pedir ajuda. No primeiro dia, você se perde completamente. Ela desapareceu. Você está SOZINHO e SEM MAPA. E agora?',
-        options: [
-            {
-                text: 'Grito por ajuda! "Espera! Me perdi!"',
-                points: 70,
-                feedback: 'Humildade forçada. Ela volta e ri.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { humility: +2 }
-            },
-            {
-                text: 'Sigo sozinho. Não preciso de ninguém!',
-                points: 50,
-                feedback: 'Orgulho perigoso.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { pride: +2, risk: +1 }
-            },
-            {
-                text: 'Observo a natureza: rastros, estrelas, animais.',
-                points: 90,
-                feedback: 'Autodidata! Você aprende sozinho.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, independence: +2 }
-            },
-            {
-                text: 'Volto e peço desculpas ao velho.',
-                points: 85,
-                feedback: 'Maturidade! Admitir erro é crescimento.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { humility: +3, wisdom: +1 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-A-D',
-        phase: 'cautela-aprendiz',
-        badge: '📖 O APRENDIZ',
-        title: 'Treinamento com o Mestre',
-        context: 'O velho aceita te treinar! "Você será meu último aprendiz. Posso te ensinar tudo em 3 ANOS... ou você parte em 1 mês com conhecimento parcial." Paciência vs. Urgência.',
-        options: [
-            {
-                text: 'Fico 3 ANOS. Maestria exige tempo.',
-                points: 100,
-                feedback: 'PACIÊNCIA SUPREMA! Você se torna MESTRE.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +5, patience: +3 }
-            },
-            {
-                text: 'Fico 1 ANO. Equilíbrio.',
-                points: 85,
-                feedback: 'Meio-termo sábio.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, balance: +1 }
-            },
-            {
-                text: 'Parto em 1 MÊS. Não posso esperar!',
-                points: 60,
-                feedback: 'Impaciência. Você aprende 20%.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { impatience: +1 }
-            },
-            {
-                text: 'Proponho: "Me ensine VIAJANDO juntos!"',
-                points: 95,
-                feedback: 'INOVAÇÃO! Teoria + Prática!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, innovation: +2 }
-            }
-        ]
-    },
-
-    // ========================================
-    // Q1-B - CAMINHO DA SABEDORIA
-    // ========================================
-    {
-        id: 'Q1-B',
-        phase: 'sabedoria-1',
-        badge: '📚 CAMINHO DO CONHECIMENTO',
-        title: 'A Biblioteca Proibida',
-        context: 'O velho te leva a uma biblioteca secreta. "Escolha UM livro como guia." Você vê: História, Natureza, Psicologia Humana, Magia Ancestral. Qual escolhe?',
-        options: [
-            {
-                text: 'HISTÓRIA - "Aprendo com erros do passado."',
-                points: 80,
-                feedback: 'Padrões se revelam.',
-                nextQuestionId: 'Q1-B-A',
-                karma: { wisdom: +1, patterns: +1 }
-            },
-            {
-                text: 'NATUREZA - "O mundo natural tem respostas."',
-                points: 85,
-                feedback: 'Sinais, pegadas, clima... aliados.',
-                nextQuestionId: 'Q1-B-B',
-                karma: { wisdom: +1, nature: +2 }
-            },
-            {
-                text: 'PSICOLOGIA - "Entender pessoas é tudo."',
-                points: 90,
-                feedback: 'Insight sobre motivações humanas.',
-                nextQuestionId: 'Q1-B-C',
-                karma: { wisdom: +1, empathy: +3 }
-            },
-            {
-                text: 'MAGIA - "Há forças além da razão."',
-                points: 75,
-                feedback: 'Poder... mas a que custo?',
-                nextQuestionId: 'Q1-B-D',
-                karma: { wisdom: +1, magic: +2 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-B-A',
-        phase: 'sabedoria-historia',
-        badge: '📜 LIÇÕES DO PASSADO',
-        title: 'O Erro Repetido',
-        context: 'Lendo sobre aventureiros anteriores, você vê um padrão: TODOS que foram gananciosos morreram. Os que buscaram sabedoria, prosperaram. Primeira lição aprendida.',
-        options: [
-            {
-                text: 'Decido: vou buscar SABEDORIA, não ouro.',
-                points: 100,
-                feedback: 'ILUMINAÇÃO precoce! Você entendeu.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +4, enlightenment: +1 }
-            },
-            {
-                text: 'Penso: "Eles erraram. EU sou diferente."',
-                points: 50,
-                feedback: 'Orgulho. A história se repete...',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { pride: +2, wisdom: -1 }
-            },
-            {
-                text: 'Anoto tudo para evitar os mesmos erros.',
-                points: 90,
-                feedback: 'Sabedoria prática!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, preparation: +2 }
-            },
-            {
-                text: 'Questiono: "E se esses relatos forem falsos?"',
-                points: 85,
-                feedback: 'Ceticismo saudável!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +2, critical_thinking: +2 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-B-B',
-        phase: 'sabedoria-natureza',
-        badge: '🌿 SINAIS DA TERRA',
-        title: 'Lendo o Mundo',
-        context: 'O livro te ensina: pegadas revelam intenções, clima prevê perigos, plantas curam ou matam. Você aprende a LER o mundo. Primeira aplicação: pegadas estranhas no caminho.',
-        options: [
-            {
-                text: 'Sigo as pegadas. Curiosidade científica.',
-                points: 80,
-                feedback: 'Descoberta! Você acha uma caverna secreta.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { curiosity: +2, discovery: +1 }
-            },
-            {
-                text: 'EVITO as pegadas. Pode ser armadilha.',
-                points: 70,
-                feedback: 'Cautela. Você evita perigo... e oportunidade.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { caution: +2 }
-            },
-            {
-                text: 'Analiso PROFUNDAMENTE antes de decidir.',
-                points: 95,
-                feedback: 'SABEDORIA! Você identifica: é um lobo ferido.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, analysis: +2 }
-            },
-            {
-                text: 'Marco e continuo - volto depois se precisar.',
-                points: 75,
-                feedback: 'Estratégia de longo prazo.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { strategy: +2 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-B-C',
-        phase: 'sabedoria-psicologia',
-        badge: '🧠 MESTRE DAS MENTES',
-        title: 'O Teste do Guardião',
-        context: 'Você encontra um guardião que bloqueia o caminho. Usando psicologia, você percebe: ele QUER ser convencido, mas precisa "perder" com dignidade. Como age?',
-        options: [
-            {
-                text: 'Ataco! Força é a língua universal.',
-                points: 40,
-                feedback: 'Você IGNOROU a lição de psicologia!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { violence: +1, wisdom: -1 }
-            },
-            {
-                text: 'Argumento lógico: "Deixe-me passar, por favor."',
-                points: 70,
-                feedback: 'Funciona parcialmente.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { logic: +1 }
-            },
-            {
-                text: 'Ofereço: "Me teste. Se eu passar, deixe ir."',
-                points: 95,
-                feedback: 'PERFEITO! Ele aceita com dignidade.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { empathy: +3, wisdom: +2 }
-            },
-            {
-                text: 'Elogio: "Você é o melhor guardião que vi."',
-                points: 85,
-                feedback: 'Manipulação positiva! Funciona.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { charisma: +2, manipulation: +1 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-B-D',
-        phase: 'sabedoria-magia',
-        badge: '🔮 FEITIÇOS ANCESTRAIS',
-        title: 'O Primeiro Poder',
-        context: 'O livro revela um feitiço: "Visão do Futuro" - veja 1 dia adiante, mas CUSTA 1 ano de vida por uso. Poder tem preço. Você usa?',
-        options: [
-            {
-                text: 'USO uma vez. Preciso ver o caminho seguro.',
-                points: 70,
-                feedback: 'Você vê perigos... mas perdeu 1 ano de vida.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { magic: +1, lifespan: -1 }
-            },
-            {
-                text: 'NUNCA uso. Vida vale mais que atalhos.',
-                points: 90,
-                feedback: 'Sabedoria! Verdadeiro poder vem de dentro.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, self_reliance: +2 }
-            },
-            {
-                text: 'Estudo a LÓGICA do feitiço sem usar.',
-                points: 100,
-                feedback: 'GENIAL! Você decifra sem custo!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +4, analysis: +3 }
-            },
-            {
-                text: 'USO várias vezes. Quero ver tudo!',
-                points: 40,
-                feedback: 'VÍCIO! Você vê 5 anos... mas perde 5 anos.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { magic: +2, lifespan: -5, addiction: +1 }
-            }
-        ]
-    },
-
-    // ========================================
-    // Q1-C - CAMINHO DA CORAGEM (Guerreiro)
-    // ========================================
-    {
-        id: 'Q1-C',
-        phase: 'coragem-1',
-        badge: '⚔️ CAMINHO DO GUERREIRO',
-        title: 'A Escolha das Armas',
-        context: 'O velho te leva ao arsenal. "Sua arma define sua luta." Você vê: Espada+Escudo (equilíbrio), Duas Adagas (velocidade), Machado Pesado (força), Arco Longo (tátic). Escolha.',
-        options: [
-            {
-                text: 'Espada+Escudo - Honra e equilíbrio.',
-                points: 75,
-                feedback: 'Você pensa em sobreviver, não só vencer.',
-                nextQuestionId: 'Q1-C-A',
-                karma: { courage: +1, defense: +2 }
-            },
-            {
-                text: 'Duas Adagas - Velocidade mata.',
-                points: 80,
-                feedback: 'Letal e estratégico.',
-                nextQuestionId: 'Q1-C-B',
-                karma: { courage: +1, agility: +3 }
-            },
-            {
-                text: 'Machado Pesado - Um golpe certeiro.',
-                points: 70,
-                feedback: 'Força bruta. Confiança ou arrogância?',
-                nextQuestionId: 'Q1-C-C',
-                karma: { courage: +1, strength: +3 }
-            },
-            {
-                text: 'Arco Longo - Inteligência tática.',
-                points: 85,
-                feedback: 'Mestres escolhem ONDE lutar.',
-                nextQuestionId: 'Q1-C-D',
-                karma: { courage: +1, tactics: +3 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-C-A',
-        phase: 'coragem-espada',
-        badge: '🛡️ CAVALEIRO HONRADO',
-        title: 'O Primeiro Combate',
-        context: 'Com espada e escudo, você encontra 3 bandidos atacando uma família. Você está em desvantagem numérica. Como luta?',
-        options: [
-            {
-                text: 'ATACO de frente! Honra não recua!',
-                points: 80,
-                feedback: 'Coragem heroica! Você vence mas fica ferido.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { courage: +3, honor: +2, health: -1 }
-            },
-            {
-                text: 'Uso o ESCUDO para proteger a família primeiro.',
-                points: 95,
-                feedback: 'HEROÍSMO! Defesa antes de ataque.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { courage: +2, protection: +3 }
-            },
-            {
-                text: 'Táticas: ataco um de cada vez, usando terreno.',
-                points: 90,
-                feedback: 'Guerreiro inteligente!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { courage: +2, tactics: +3 }
-            },
-            {
-                text: 'Grito para assustar: "GUARDAS ESTÃO VINDO!"',
-                points: 70,
-                feedback: 'Blefe funciona! Bandidos fogem.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { tactics: +2, deception: +1 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-C-B',
-        phase: 'coragem-adagas',
-        badge: '🗡️ ASSASSINO ÁGIL',
-        title: 'Velocidade Mortal',
-        context: 'Com duas adagas, você é RÁPIDO. Um oponente enorme e lento te desafia. "Lute comigo ou pague pedágio!" Como age?',
-        options: [
-            {
-                text: 'Aceito! Velocidade vence força.',
-                points: 90,
-                feedback: 'DANÇA MORTAL! Você corta 100 vezes antes dele reagir.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { courage: +2, agility: +3 }
-            },
-            {
-                text: 'Ataco as PERNAS primeiro. Imobilizo.',
-                points: 95,
-                feedback: 'TÁTICA BRUTAL! Eficiente e letal.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { tactics: +3, ruthlessness: +1 }
-            },
-            {
-                text: 'Nego e contorno. Não vale a pena.',
-                points: 60,
-                feedback: 'Pragmatismo. Ele ri de você.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { pragmatism: +1, reputation: -1 }
-            },
-            {
-                text: 'Desafio: "Se você ME acertar UMA vez, pago dobrado."',
-                points: 85,
-                feedback: 'CONFIANÇA! Ele não te acerta. Você vence.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { confidence: +3, showmanship: +1 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-C-C',
-        phase: 'coragem-machado',
-        badge: '🪓 BERSERKER BRUTAL',
-        title: 'Força Absoluta',
-        context: 'Seu machado pesa 20kg. Poucos conseguem erguer. Você encontra uma PORTA DE PEDRA bloqueando o caminho. Outros tentaram abrir com inteligência. Você tem força. E agora?',
-        options: [
-            {
-                text: 'DESTRUO a porta com o machado!',
-                points: 80,
-                feedback: 'FORÇA BRUTA! A porta se estilhaça.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { strength: +3, direct_approach: +1 }
-            },
-            {
-                text: 'Procuro mecanismo escondido primeiro.',
-                points: 75,
-                feedback: 'Guerreiro sábio. Você encontra alavanca.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +2, patience: +1 }
-            },
-            {
-                text: 'Uso força para ARRANCAR a porta do batente.',
-                points: 85,
-                feedback: 'CRIATIVIDADE BRUTAL! Funciona!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { strength: +3, creativity: +1 }
-            },
-            {
-                text: 'Grito: "HÁ ALGUÉM AÍ?" Talvez abram de dentro.',
-                points: 70,
-                feedback: 'Comunicação funciona! Alguém abre.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { charisma: +1, wisdom: +1 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-C-D',
-        phase: 'coragem-arco',
-        badge: '🏹 ARQUEIRO TÁTICO',
-        title: 'O Lobo Ferido',
-        context: 'Com arco, você vê de longe: um lobo ferido protegendo filhotes. Armadilha de caçadores o pegou. Você poderia matá-lo facilmente à distância ou...',
-        options: [
-            {
-                text: 'Mato de longe. Rápido e sem risco.',
-                points: 50,
-                feedback: 'Eficiente mas... algo se apaga em você.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { efficiency: +1, compassion: -2 }
-            },
-            {
-                text: 'Aproximo e LIBERTO da armadilha.',
-                points: 95,
-                feedback: 'RISCO ENORME! Mas o lobo ENTENDE. Aliado ganho!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { courage: +2, compassion: +3, animal_bond: +2 }
-            },
-            {
-                text: 'Ignoro. Não é meu problema.',
-                points: 40,
-                feedback: 'Frieza. Você segue com olhos do lobo te seguindo.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { coldness: +1 }
-            },
-            {
-                text: 'Observo de longe. Estudo comportamento.',
-                points: 75,
-                feedback: 'Tático! Você aprende padrões de animais.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { tactics: +2, observation: +2 }
-            }
-        ]
-    },
-
-    // ========================================
-    // Q1-D - CAMINHO DO PRAGMATISMO (Mercador)
-    // ========================================
-    {
-        id: 'Q1-D',
-        phase: 'pragmatismo-1',
-        badge: '💰 CAMINHO DO MERCADOR',
-        title: 'O Investimento Inicial',
-        context: 'O velho ri: "Mercadores entendem que dinheiro faz dinheiro." Ele te EMPRESTA 100 moedas. "O que você faz com isso para COMEÇAR rico?" 4 mercadores oferecem negócios...',
-        options: [
-            {
-                text: 'Compro provisões em MASSA. Segurança.',
-                points: 60,
-                feedback: 'Você está preparado... mas sem capital futuro.',
-                nextQuestionId: 'Q1-D-A',
-                karma: { safety: +2 }
-            },
-            {
-                text: 'Compro BARATO aqui, vendo CARO na próxima cidade.',
-                points: 90,
-                feedback: 'ARBITRAGEM! Verdadeiro empreendedor.',
-                nextQuestionId: 'Q1-D-B',
-                karma: { trade: +3, entrepreneurship: +2 }
-            },
-            {
-                text: 'Guardo 50, gasto 50. Balanço prudente.',
-                points: 75,
-                feedback: 'Conservador. Pensamento de longo prazo.',
-                nextQuestionId: 'Q1-D-C',
-                karma: { prudence: +2, planning: +1 }
-            },
-            {
-                text: 'EMPRESTO as 100 com JUROS! Renda passiva!',
-                points: 85,
-                feedback: 'INVESTIDOR! Ousado e inteligente.',
-                nextQuestionId: 'Q1-D-D',
-                karma: { investment: +3, boldness: +1 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-D-A',
-        phase: 'pragmatismo-seguro',
-        badge: '📦 ACUMULADOR',
-        title: 'Excesso de Peso',
-        context: 'Você comprou TUDO: comida para 6 meses, água, ferramentas, armas extras. Mochila pesa 40kg. Primeiro dia: você está EXAUSTO. Não consegue andar rápido. Como resolve?',
-        options: [
-            {
-                text: 'Continuo assim. Preparação vale o sacrifício.',
-                points: 60,
-                feedback: 'Teimosia. Você anda lento mas seguro.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { stubbornness: +1, endurance: +1 }
-            },
-            {
-                text: 'VENDO metade. Lucro + fico mais leve.',
-                points: 85,
-                feedback: 'Adaptação inteligente!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { adaptability: +2, profit: +1 }
-            },
-            {
-                text: 'DOO para aldeões. Ganho gratidão.',
-                points: 75,
-                feedback: 'Generosidade estratégica. Eles te ajudarão depois.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { generosity: +2, social_capital: +1 }
-            },
-            {
-                text: 'ESCONDO metade. Pego depois se precisar.',
-                points: 70,
-                feedback: 'Planejamento de contingência.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { planning: +2 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-D-B',
-        phase: 'pragmatismo-comerciante',
-        badge: '🤝 EMPREENDEDOR',
-        title: 'A Primeira Negociação',
-        context: 'Você comprou especiarias por 100 moedas. Na próxima cidade, valem 500! MAS um vendedor desesperado te oferece seu ESTOQUE INTEIRO por 400. Se você comprar, não pode vender suas especiarias. Dilema!',
-        options: [
-            {
-                text: 'Vendo minhas especiarias. Lucro garantido agora.',
-                points: 75,
-                feedback: 'Lucro sólido de 400 moedas.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { pragmatism: +2 }
-            },
-            {
-                text: 'Compro o estoque dele. MAIS mercadoria = MAIS lucro depois.',
-                points: 85,
-                feedback: 'AMBIÇÃO! Risco calculado alto.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { ambition: +2, risk: +2 }
-            },
-            {
-                text: 'SOCIEDADE: junto meu estoque com o dele, vendemos tudo juntos.',
-                points: 95,
-                feedback: 'WIN-WIN! Parceria perfeita.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { collaboration: +3, networking: +2 }
-            },
-            {
-                text: 'Negotio: compro parte do estoque dele com parte do meu.',
-                points: 90,
-                feedback: 'CRIATIVIDADE FINANCEIRA! Swap inteligente.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { creativity: +2, negotiation: +2 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-D-C',
-        phase: 'pragmatismo-prudente',
-        badge: '⚖️ PLANEJADOR',
-        title: 'Decisão Equilibrada',
-        context: 'Com 50 moedas guardadas e 50 em provisões, você encontra uma OPORTUNIDADE: investir em uma caravana (30 moedas) que pode TRIPLICAR em 1 mês. Mas você perde liquidez. Investe?',
-        options: [
-            {
-                text: 'SIM! Invisto 30. Risco calculado.',
-                points: 85,
-                feedback: 'FUNCIONA! 30 viram 90 moedas.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { investment: +2, returns: +3 }
-            },
-            {
-                text: 'NÃO. Liquidez é rei. Mantenho tudo disponível.',
-                points: 70,
-                feedback: 'Segurança. Você evita risco... e oportunidade.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { safety: +2, missed_opportunity: +1 }
-            },
-            {
-                text: 'Invisto 15. Hedge - metade seguro, metade arriscado.',
-                points: 80,
-                feedback: 'BALANÇO PERFEITO! Retorno moderado, risco baixo.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { balance: +3, prudence: +2 }
-            },
-            {
-                text: 'Investigo PRIMEIRO. Audito a caravana antes.',
-                points: 95,
-                feedback: 'DUE DILIGENCE! Você descobre que é golpe!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, analysis: +3, dodge: +1 }
-            }
-        ]
-    },
-
-    {
-        id: 'Q1-D-D',
-        phase: 'pragmatismo-investidor',
-        badge: '💵 CAPITALISTA',
-        title: 'Empréstimo com Juros',
-        context: 'Você emprestou 100 moedas a 10% ao mês. Mês 1: você recebe 110 de volta. Mas o devedor pede: "Empresta mais 200? Prometo 20% de retorno!" Confia?',
-        options: [
-            {
-                text: 'SIM! Dobro a aposta. Alto risco, alto retorno.',
-                points: 75,
-                feedback: 'ELE PAGA! Mas você quase perdeu tudo. Sorte.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { risk: +3, luck: +1 }
-            },
-            {
-                text: 'NÃO. Uma vez foi bom, duas é ganância.',
-                points: 85,
-                feedback: 'SABEDORIA! Ele some com dinheiro de outros.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, caution: +2 }
-            },
-            {
-                text: 'Empresto 100. Teste de confiança gradual.',
-                points: 80,
-                feedback: 'Meio-termo. Ele paga, você lucra moderadamente.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { balance: +2, trust: +1 }
-            },
-            {
-                text: 'Exijo GARANTIA real. Negócio ou propriedade.',
-                points: 95,
-                feedback: 'MESTRE! Você empresta COM garantia. Zero risco!',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { wisdom: +3, security: +3 }
-            }
-        ]
-    },
-
-    // ========================================
-    // CONVERGÊNCIA - Questões mais profundas
-    // ========================================
-
-    // ========== EXEMPLOS DE 3º NÍVEL (Demonstração) ==========
     
     {
-        id: 'Q1-C-D-B',
-        phase: 'coragem-arco-compassivo',
-        badge: '🐺 GUARDIÃO DOS LOBOS',
-        title: 'A Matilha Leal',
-        context: 'VOCÊ SALVOU O LOBO! Ele e seus filhotes te seguem agora. Você é o ALFA. Durante um ataque de bandidos, os lobos PROTEGEM você ferozmente. Parceria inesperada!',
+        id: 'Q1',
+        phase: 'cap1-chamado',
+        badge: '🗺️ CAPÍTULO 1: O CHAMADO',
+        title: 'O Velho e o Mapa Sangrento',
+        context: 'Chuva pesada. Noite escura. Você caminha pela praça vazia quando um VELHO surge das sombras. Seus olhos brilham com urgência doentia. Ele empurra um mapa manchado de sangue fresco em suas mãos trêmulas. "RUN!" ele sussurra com voz rouca, "eles estão vindo... o tesouro... você é o escolhido..." Ele tosse sangue e cai morto aos seus pés. Guardas gritam ao longe. O mapa queima em suas mãos. VOCÊ TEM 10 SEGUNDOS PARA DECIDIR.',
         options: [
             {
-                text: 'Liberto os lobos. "Sigam livres!"',
+                text: 'ACEITO O MAPA e corro! Seja lá o que for, isso é importante!',
+                points: 70,
+                feedback: 'ADRENALINA! Você corre entre vielas escuras, coração batendo...',
+                nextQuestionId: 'Q2A',
+                karma: { courage: +2, curiosity: +1 }
+            },
+            {
+                text: 'RECUSO! Jogo o mapa longe e finjo que não vi nada. Isso é armadilha!',
+                points: 50,
+                feedback: 'MEDO prudente. Você se afasta... mas algo te puxa de volta.',
+                nextQuestionId: 'Q2B',
+                karma: { caution: +2, survival: +1 }
+            },
+            {
+                text: 'DESCONFIO! Examino o corpo do velho. Isso pode ser encenação!',
                 points: 85,
-                feedback: 'Liberdade! Mas eles ESCOLHEM ficar por amor.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { freedom: +2, loyalty_earned: +3 }
-            },
-            {
-                text: 'Treino os lobos para combate. Equipe letal!',
-                points: 90,
-                feedback: 'PACK TÁTICO! Você e matilha = imparáveis.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { tactics: +3, companionship: +2 }
-            },
-            {
-                text: 'Ensino lobos a proteger aldeias fracas.',
-                points: 100,
-                feedback: 'HEROÍSMO! Vocês se tornam LENDA: "Guardiões do Bem".',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { heroism: +5, legacy: +3 }
-            },
-            {
-                text: 'Uso lobos para caçar. Sobrevivência simbiótica.',
-                points: 75,
-                feedback: 'Pragmático. Harmonia com natureza.',
-                nextQuestionId: 'CONVERGENCIA',
-                karma: { survival: +2, nature: +2 }
+                feedback: 'INTELIGÊNCIA! Você percebe: há uma TATUAGEM no pulso dele...',
+                nextQuestionId: 'Q2C',
+                karma: { wisdom: +2, perception: +2 }
             }
         ]
     },
 
     // ========================================
-    // CONVERGÊNCIA - TODOS OS CAMINHOS SE ENCONTRAM
+    // CAPÍTULO 2: PRIMEIRAS ESCOLHAS
     // ========================================
+    
+    // ===== CAMINHO A: ACEITOU O MAPA =====
     {
-        id: 'CONVERGENCIA',
-        phase: 'convergência',
-        badge: '🌅 O ENCONTRO',
-        title: 'Todos os Caminhos Se Cruzam',
-        context: 'Após sua jornada única, você chega a uma encruzilhada sagrada. Outros viajantes aparecem de diferentes direções. Cada um trilhou um caminho diferente. Um portal se abre: "Apenas quem merece passa." Como você procede?',
+        id: 'Q2A',
+        phase: 'cap2-aceitou',
+        badge: '⚡ CAPÍTULO 2: A FUGA',
+        title: 'Correndo Por Sua Vida',
+        context: 'Você corre. Guardas gritam "ALI!" Flechas assobiam. Você vira um beco. BECO SEM SAÍDA! Paredes altas, lixo fétido, ratos por todo lado. Guardas se aproximam. Sua GARGANTA SECA de sede. PERNAS TREMEM de cansaço. Você olha o mapa rapidamente: há marcas... coordenadas... um símbolo estranho. Você tem 3 segundos.',
         options: [
             {
-                text: 'Corro para o portal! Cheguei aqui primeiro!',
-                points: 40,
-                feedback: 'Egoísmo. Combate violento acontece...',
-                nextQuestionId: 'FINAL-CONFLITO',
-                karma: { selfishness: +2 }
+                text: 'ESCALO a parede! Força bruta, adrenalina pura!',
+                points: 75,
+                feedback: 'Suas UNHAS SANGRAM. Músculos GRITAM. Mas você SOBE!',
+                nextQuestionId: 'Q3A1',
+                karma: { strength: +2, determination: +2 }
             },
             {
-                text: 'Proponho: "Vamos JUNTOS!"',
-                points: 95,
-                feedback: 'SABEDORIA COLETIVA! Portal se EXPANDE!',
-                nextQuestionId: 'FINAL-UNIAO',
-                karma: { collaboration: +4, wisdom: +3 }
+                text: 'GRITO: "Vocês querem o mapa?! PEGUEM!" e jogo longe. Distração!',
+                points: 85,
+                feedback: 'INTELIGÊNCIA TÁTICA! Guardas correm para o mapa. Você escapa!',
+                nextQuestionId: 'Q3A2',
+                karma: { tactics: +3, cunning: +1 }
             },
             {
-                text: 'Ofereço: "Entrem vocês primeiro."',
+                text: 'ME RENDO! "Não matem! Eu explico tudo!" Negociação sob pressão.',
+                points: 60,
+                feedback: 'Guardas hesitam. Você tem 10 segundos para convencê-los...',
+                nextQuestionId: 'Q3A3',
+                karma: { charisma: +1, desperation: +1 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q2B',
+        phase: 'cap2-recusou',
+        badge: '🏠 CAPÍTULO 2: A RECUSA',
+        title: 'A Noite Que Não Acaba',
+        context: 'Você joga o mapa longe e volta pra casa. Mas... você NÃO CONSEGUE DORMIR. Toda vez que fecha os olhos, vê o rosto do velho. "Você é o escolhido..." ecoa na sua mente. 3h da manhã. Você SUA frio. Lá fora, GRITOS. Você espia pela janela: A CIDADE ESTÁ EM CHAMAS! Soldados invadem casas. Estão procurando... ALGO. Ou ALGUÉM. Sua porta TREME com batidas violentas.',
+        options: [
+            {
+                text: 'VOLTO para buscar o mapa! Eu PRECISO saber o que está acontecendo!',
+                points: 80,
+                feedback: 'CORAGEM ressurge! Você corre de volta para a praça...',
+                nextQuestionId: 'Q3B1',
+                karma: { courage: +2, curiosity: +2 }
+            },
+            {
+                text: 'FUJO pelos fundos! Não é meu problema, preciso sobreviver!',
+                points: 50,
+                feedback: 'INSTINTO DE SOBREVIVÊNCIA. Você escapa... mas pra onde ir?',
+                nextQuestionId: 'Q3B2',
+                karma: { survival: +2, selfishness: +1 }
+            },
+            {
+                text: 'ABRO a porta e ENFRENTO! "O que vocês querem?!"',
+                points: 70,
+                feedback: 'BRAVURA! O soldado te encara: "Onde está o MAPA?"',
+                nextQuestionId: 'Q3B3',
+                karma: { courage: +1, confrontation: +1 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q2C',
+        phase: 'cap2-desconfiou',
+        badge: '🔍 CAPÍTULO 2: A INVESTIGAÇÃO',
+        title: 'O Segredo da Tatuagem',
+        context: 'Você examina o corpo. A tatuagem no pulso dele: uma SERPENTE devorando a própria cauda. Você reconhece... é o símbolo da ORDEM DOS SILENCIOSOS - uma sociedade secreta que "protege conhecimentos proibidos". O velho não era um mendigo. Era um GUARDIÃO. Ele morreu te passando algo MUITO importante. De repente, você ouve passos. MUITOS passos. Não são guardas comuns. São ASSASSINOS.',
+        options: [
+            {
+                text: 'SIGO O VELHO secretamente antes que cheguem! Preciso saber mais sobre ele!',
                 points: 90,
-                feedback: 'HUMILDADE! Todos INSISTEM que você entre primeiro.',
-                nextQuestionId: 'FINAL-HONRA',
+                feedback: 'PERCEPÇÃO AGUÇADA! Você arrasta o corpo para as sombras e procura...',
+                nextQuestionId: 'Q3C1',
+                karma: { perception: +3, boldness: +1 }
+            },
+            {
+                text: 'ROUBO O MAPA do cadáver e FUJO! Não quero envolvimento com assassinos!',
+                points: 70,
+                feedback: 'PRAGMATISMO frio. Você pega o mapa e some nas sombras...',
+                nextQuestionId: 'Q3C2',
+                karma: { pragmatism: +2, theft: +1 }
+            },
+            {
+                text: 'CONFRONTO OS ASSASSINOS! "Quem era esse homem?! O que ele guardava?!"',
+                points: 65,
+                feedback: 'OUSADIA SUICIDA! Eles param surpresos. Um deles RI...',
+                nextQuestionId: 'Q3C3',
+                karma: { courage: +2, recklessness: +1 }
+            }
+        ]
+    },
+
+    // ========================================
+    // CAPÍTULO 3: CONSEQUÊNCIAS
+    // ========================================
+    
+    // ===== Q3A1: Escalou a parede =====
+    {
+        id: 'Q3A1',
+        phase: 'cap3-fuga-solo',
+        badge: '🏃 CAPÍTULO 3: SOLIDÃO E SEDE',
+        title: 'Sozinho no Deserto Urbano',
+        context: 'Você escalou. Está nos telhados. Mas PERDEU o mapa na escalada! Ele caiu... lá embaixo... nas mãos dos guardas. Você tem apenas MEMÓRIA do símbolo: uma ESTRELA de 7 pontas. Agora você está sozinho, no topo da cidade, com SEDE DESESPERADORA. Sua boca parece lixa. Lábios racham. Você vê ao longe: um RIO... mas entre você e ele, há o BAIRRO PROIBIDO - onde ninguém entra e sai vivo.',
+        options: [
+            {
+                text: 'DESÇO e procuro água nas vielas. Preciso BEBER ou morro!',
+                points: 60,
+                feedback: 'NECESSIDADE BÁSICA! Você desce tropeçando... e ouve vozes...',
+                nextQuestionId: 'Q4A',
+                karma: { desperation: +2, thirst: +1 }
+            },
+            {
+                text: 'ATRAVESSO o Bairro Proibido! Coragem ou loucura? Não importa - PRECISO de água!',
+                points: 75,
+                feedback: 'DESESPERO te dá coragem! Você salta de telhado em telhado...',
+                nextQuestionId: 'Q4A',
+                karma: { courage: +2, desperation: +1 }
+            },
+            {
+                text: 'RACIOCINO: foco no SÍMBOLO da estrela. Água posso achar depois. Preciso decifrar isso!',
+                points: 90,
+                feedback: 'DISCIPLINA MENTAL! Você ignora a sede torturante e PENSA...',
+                nextQuestionId: 'Q4B',
+                karma: { wisdom: +3, willpower: +2 }
+            }
+        ]
+    },
+
+    // ===== Q3A2: Jogou o mapa (tática) =====
+    {
+        id: 'Q3A2',
+        phase: 'cap3-tatico',
+        badge: '🧠 CAPÍTULO 3: O ESTRATEGISTA',
+        title: 'Parceiros Improváveis',
+        context: 'Você jogou o mapa como distração e escapou! GENIAL! Mas agora você não tem o mapa... e ALGUÉM viu tudo. Uma GAROTA de uns 16 anos sai das sombras. "Isso foi BRILLHANTE!", ela diz rindo. "Eu sou Lyra. Ladra profissional. E você... você tem TALENTO." Ela estende a mão. "Quer parceria? Eu SEI onde esses guardas vão levar o mapa. Podemos roubá-lo de volta... se você confiar em mim."',
+        options: [
+            {
+                text: 'ACEITO! Sozinho eu morro. Juntos, temos chance!',
+                points: 85,
+                feedback: 'ALIANÇA FORMADA! Lyra sorri: "Você não vai se arrepender..."',
+                nextQuestionId: 'Q4A',
+                karma: { trust: +2, collaboration: +2 }
+            },
+            {
+                text: 'RECUSO! "Não confio em ladrões." E vou sozinho recuperar o mapa.',
+                points: 70,
+                feedback: 'INDEPENDÊNCIA. Lyra dá de ombros: "Sua perda..." e some.',
+                nextQuestionId: 'Q4A',
+                karma: { independence: +1, mistrust: +1 }
+            },
+            {
+                text: 'TESTO ela: "Me mostre algo que prove que sabe onde está o mapa."',
+                points: 95,
+                feedback: 'SABEDORIA! Ela mostra um MEDALHÃO do capitão da guarda. Roubou dele!',
+                nextQuestionId: 'Q4B',
+                karma: { wisdom: +3, caution: +2 }
+            }
+        ]
+    },
+
+    // ===== Q3A3: Se rendeu =====
+    {
+        id: 'Q3A3',
+        phase: 'cap3-rendido',
+        badge: '⛓️ CAPÍTULO 3: PRISIONEIRO',
+        title: 'Nas Masmorras do Terror',
+        context: 'Você se rendeu. ERRO FATAL. Guardas te arrastam para as MASMORRAS REAIS. Escuro. Úmido. Cheiro de MORTE e PODRIDÃO. Você ouve gritos distantes. Torturas. Sua GARGANTA SECA. ESTÔMAGO DOI de fome. Faz 3 dias sem água. Você está MORRENDO. De repente, um PRISIONEIRO na cela ao lado sussurra: "Psiu... você... o do mapa... EU SEI O QUE É... posso te tirar daqui... mas você tem que ME LIBERTAR primeiro..."',
+        options: [
+            {
+                text: 'CONCORDO! "Me tira daqui e eu te ajudo a fugir também!"',
+                points: 70,
+                feedback: 'DESESPERO aceita qualquer coisa. Ele ri baixo: "Ótimo..."',
+                nextQuestionId: 'Q4C',
+                karma: { desperation: +2, deal: +1 }
+            },
+            {
+                text: 'DESCONFIO: "Quem é você? Como sabe do mapa?!"',
+                points: 85,
+                feedback: 'CAUTELA mesmo desesperado! Ele suspira: "Eu ERA um guardião..."',
+                nextQuestionId: 'Q4C',
+                karma: { wisdom: +2, suspicion: +1 }
+            },
+            {
+                text: 'GRITO pedindo GUARDAS! "Esse prisioneiro está tentando me manipular!"',
+                points: 50,
+                feedback: 'Guardas riem: "Ninguém liga pro que vocês fazem aí embaixo..."',
+                nextQuestionId: 'Q4C',
+                karma: { naivety: +1 }
+            }
+        ]
+    },
+
+    // ===== Q3B1: Voltou para buscar o mapa =====
+    {
+        id: 'Q3B1',
+        phase: 'cap3-retorno',
+        badge: '🔥 CAPÍTULO 3: NA CIDADE EM CHAMAS',
+        title: 'O Arrependimento Ardente',
+        context: 'Você volta correndo para a praça. A cidade QUEIMA! Calor SUFOCANTE. Fumaça CEGA seus olhos. Você tosse violentamente. Lágrimas escorrem. Quando chega na praça... O CORPO SUMIU! O mapa SUMIU! Mas há SANGUE fresco... um rastro... levando para o TEMPLO ABANDONADO no centro da cidade. Você ouve EXPLOSÕES. Soldados estão DEMOLINDO o templo! "ENCONTREM A CÂMARA!" eles gritam.',
+        options: [
+            {
+                text: 'CORRO pro templo ANTES que seja destruído! O segredo está lá!',
+                points: 85,
+                feedback: 'URGÊNCIA EXTREMA! Você corre entre chamas e escombros...',
+                nextQuestionId: 'Q4B',
+                karma: { urgency: +3, courage: +2 }
+            },
+            {
+                text: 'OBSERVO de longe. Espero eles acharem a câmara, DEPOIS roubo deles!',
+                points: 75,
+                feedback: 'PACIÊNCIA TÁTICA. Você se esconde e espera...',
+                nextQuestionId: 'Q4B',
+                karma: { tactics: +2, patience: +1 }
+            },
+            {
+                text: 'DESISTO! Isso é GRANDE DEMAIS! Vou fugir da cidade enquanto posso!',
+                points: 45,
+                feedback: 'MEDO vence. Você vira as costas... mas algo te faz PARAR.',
+                nextQuestionId: 'Q4A',
+                karma: { fear: +2, doubt: +1 }
+            }
+        ]
+    },
+
+    // ===== Q3B2: Fugiu pelos fundos =====
+    {
+        id: 'Q3B2',
+        phase: 'cap3-fuga-egoista',
+        badge: '🌲 CAPÍTULO 3: EXÍLIO FORÇADO',
+        title: 'Sozinho na Floresta Sombria',
+        context: 'Você fugiu. Está na FLORESTA NEGRA nos arredores da cidade. Sozinho. Sem comida. Sem água. Sem direção. A noite cai. Sons ASSUSTADORES ecoam. Olhos BRILHAM na escuridão. Seu ESTÔMAGO GRITA de fome. Você encontra um RIACHO. Água! Você bebe desesperado... e VOMITA. Água ENVENENADA! Você cai de joelhos, TREMENDO. Visões estranhas: o VELHO aparece: "Covarde... você abandonou SEU destino... agora o destino te abandona..."',
+        options: [
+            {
+                text: 'LUTO contra o veneno! Forço vômito, procuro ervas medicinais!',
+                points: 80,
+                feedback: 'VONTADE DE VIVER! Você vomita tudo, corpo convulsa, mas SOBREVIVE!',
+                nextQuestionId: 'Q4A',
+                karma: { survival: +3, willpower: +2 }
+            },
+            {
+                text: 'ME RENDO ao veneno. "Talvez... seja melhor assim..." Desisto.',
+                points: 30,
+                feedback: 'DESISTÊNCIA... Você fecha os olhos... mas ALGO te acorda...',
+                nextQuestionId: 'Q4C',
+                karma: { despair: +2, weakness: +1 }
+            },
+            {
+                text: 'IMPLORO às visões: "Me dê uma segunda chance! Eu vou voltar!"',
+                points: 75,
+                feedback: 'ARREPENDIMENTO sincero! A visão do velho sorri...',
+                nextQuestionId: 'Q4B',
+                karma: { humility: +2, redemption: +1 }
+            }
+        ]
+    },
+
+    // ===== Q3B3: Enfrentou os soldados =====
+    {
+        id: 'Q3B3',
+        phase: 'cap3-confronto',
+        badge: '⚔️ CAPÍTULO 3: INTERROGATÓRIO',
+        title: 'A Verdade Dolorosa',
+        context: 'Você abre a porta. O SOLDADO te encara. Ele é ENORME. Cicatriz no rosto. Olhos frios. "Onde está o MAPA?" Você responde: "Que mapa?" Ele SORRI. "Errado." SOCO no estômago. Você DOBRA de dor. Não consegue RESPIRAR. Ele te arrasta pela casa. "Última chance... fala... ou sua FAMÍLIA morre." Você NÃO TEM família. Ele está BLEFANDO. Ou não?',
+        options: [
+            {
+                text: 'MINTO: "Está escondido no poço!" Ganho tempo!',
+                points: 75,
+                feedback: 'ESTRATÉGIA! Ele sai correndo. Você tem 30 segundos...',
+                nextQuestionId: 'Q4A',
+                karma: { deception: +2, quick_thinking: +1 }
+            },
+            {
+                text: 'DIGO A VERDADE: "Eu joguei fora! Não quero envolvimento!"',
+                points: 65,
+                feedback: 'HONESTIDADE. Ele te encara... e RIcomeça: "Idiota..."',
+                nextQuestionId: 'Q4C',
+                karma: { honesty: +1, vulnerability: +1 }
+            },
+            {
+                text: 'ATACO! Pego uma CADEIRA e bato nele! Luta ou morre!',
+                points: 70,
+                feedback: 'DESESPERO CORAJOSO! Você acerta a cabeça dele mas...',
+                nextQuestionId: 'Q4C',
+                karma: { courage: +2, violence: +1 }
+            }
+        ]
+    },
+
+    // ===== Q3C1: Seguiu o velho =====
+    {
+        id: 'Q3C1',
+        phase: 'cap3-segredo',
+        badge: '🗝️ CAPÍTULO 3: O GUARDIÃO SECRETO',
+        title: 'A Ordem dos Silenciosos',
+        context: 'Você arrasta o corpo para um BECO ESCURO. Procura por pistas. Encontra uma CHAVE pendurada no pescoço dele. Formato estranho. 7 pontas. De repente, o CORPO se mexe! ELE ESTÁ VIVO! "Você... passou... no teste..." ele sussurra. "Eu não morri... fingir... ver se você era... digno... A Ordem... precisa de você... eles virão... traga a chave... ao Templo... meia-noite..." Ele REALMENTE morre dessa vez.',
+        options: [
+            {
+                text: 'VOU ao templo à meia-noite! Isso é DESTINO!',
+                points: 90,
+                feedback: 'ACEITAÇÃO do chamado! Você guarda a chave com cuidado...',
+                nextQuestionId: 'Q4B',
+                karma: { destiny: +3, trust: +1 }
+            },
+            {
+                text: 'DESCONFIO! Isso pode ser armadilha! Vou MAS armado e preparado!',
+                points: 85,
+                feedback: 'SABEDORIA cautelosa! Você se prepara para o pior...',
+                nextQuestionId: 'Q4B',
+                karma: { wisdom: +2, preparation: +2 }
+            },
+            {
+                text: 'FUJO! Isso é LOUCURA! Jogo a chave fora e sumo!',
+                points: 50,
+                feedback: 'MEDO vence. Você joga a chave... mas ela BRILHA...',
+                nextQuestionId: 'Q4A',
+                karma: { fear: +2 }
+            }
+        ]
+    },
+
+    // ===== Q3C2: Roubou o mapa =====
+    {
+        id: 'Q3C2',
+        phase: 'cap3-ladrao',
+        badge: '🎭 CAPÍTULO 3: O LADRÃO PRAGMÁTICO',
+        title: 'Roubo e Fuga',
+        context: 'Você rouba o mapa do cadáver. Assassinos chegam correndo. Você JÁ SUMIU. Ágil. Esperto. Mas agora... você TEM o mapa mas NÃO ENTENDE nada. Símbolos estranhos. Coordenadas impossíveis. Língua morta. Você precisa de um ESPECIALISTA. Conhece dois: 1) MARCUS, o tradutor - honesto mas lento. 2) VERA, a decifradora - rápida mas perigosa. Quem escolher pode te TRAIR ou SALVAR.',
+        options: [
+            {
+                text: 'Procuro MARCUS. Prefiro segurança mesmo que demore!',
+                points: 75,
+                feedback: 'PRUDÊNCIA! Marcus estuda o mapa: "Isso é... impossível..."',
+                nextQuestionId: 'Q4B',
+                karma: { caution: +2, patience: +1 }
+            },
+            {
+                text: 'Procuro VERA. Preciso de velocidade mesmo com risco!',
+                points: 80,
+                feedback: 'OUSADIA! Vera olha e SORRI: "Eu sei EXATAMENTE o que é isso..."',
+                nextQuestionId: 'Q4C',
+                karma: { risk: +2, urgency: +1 }
+            },
+            {
+                text: 'TENTO DECIFRAR SOZINHO! Não confio em ninguém!',
+                points: 70,
+                feedback: 'INDEPENDÊNCIA! Você passa noites estudando...',
+                nextQuestionId: 'Q4A',
+                karma: { independence: +2, stubbornness: +1 }
+            }
+        ]
+    },
+
+    // ===== Q3C3: Confrontou os assassinos =====
+    {
+        id: 'Q3C3',
+        phase: 'cap3-confronto-assassinos',
+        badge: '💀 CAPÍTULO 3: DANÇA COM A MORTE',
+        title: 'Os Que Não Têm Nome',
+        context: 'Você confronta os ASSASSINOS. Eles param. Silêncio tenso. Um deles, o LÍDER, remove o capuz. Mulher. Linda. Cicatrizes rituais no rosto. "Coragem... ou estupidez?" ela pergunta, voz suave mas MORTAL. "Esse homem guardava um SEGREDO que matou 1000 pessoas. E você quer SABER mais? Interessante..." Ela ergue a mão. Os outros DESEMBAINHAM lâminas. "Última chance. Junte-se a nós... ou morra como ele."',
+        options: [
+            {
+                text: 'ME JUNTO a eles! "Quero poder. Quero conhecimento. O que devo fazer?"',
+                points: 75,
+                feedback: 'AMBIÇÃO! Ela sorri: "Bom. Siga-nos. E NUNCA olhe para trás."',
+                nextQuestionId: 'Q4C',
+                karma: { ambition: +3, darkness: +2 }
+            },
+            {
+                text: 'RECUSO: "Prefiro morrer livre que viver servo!" Preparo para lutar!',
+                points: 85,
+                feedback: 'HONRA! Ela respeita: "Então morra com honra." Ataque!',
+                nextQuestionId: 'Q4A',
+                karma: { honor: +3, courage: +2 }
+            },
+            {
+                text: 'NEGOCIO: "E se eu souber onde está algo que VOCÊS procuram?"',
+                points: 80,
+                feedback: 'ESTRATÉGIA! Ela hesita. Você tem a atenção dela...',
+                nextQuestionId: 'Q4B',
+                karma: { negotiation: +2, cunning: +2 }
+            }
+        ]
+    },
+
+    // ========================================
+    // CAPÍTULO 4: A GRANDE REVIRAVOLTA
+    // (CONVERGÊNCIAS NARRATIVAS - Múltiplos caminhos levam aqui)
+    // ========================================
+    
+    {
+        id: 'Q4A',
+        phase: 'cap4-cidade-perdida',
+        badge: '🏛️ CAPÍTULO 4: A CIDADE PERDIDA',
+        title: 'O Que Jaz Sob as Cinzas',
+        context: 'TODOS os caminhos te trouxeram AQUI. Sob as ruínas do templo queimado, você descobre uma ESCADARIA SECRETA. Desce. Desce. Desce por HORAS. Quando finalmente chega ao fundo... MEU DEUS. Uma CIDADE INTEIRA enterrada! Milhares de anos! Prédios de cristal negro. Esqueletos por TODA PARTE. E no centro... um PORTAL pulsante de energia roxa. Você sente MEDO absoluto. E FASCÍNIO irresistível. O mapa brilha. "ESCOLHA", uma voz ecoa em sua mente.',
+        options: [
+            {
+                text: 'ENTRO no portal! Vim até aqui, não vou parar agora!',
+                points: 80,
+                feedback: 'CORAGEM ABSOLUTA! Você mergulha na energia... TUDO se dissolve...',
+                nextQuestionId: 'Q5A',
+                karma: { courage: +4, recklessness: +1 }
+            },
+            {
+                text: 'ESTUDO a cidade primeiro! Pode haver pistas, tesouros, RESPOSTAS!',
+                points: 90,
+                feedback: 'SABEDORIA! Você explora... e encontra DIÁRIOS dos antigos...',
+                nextQuestionId: 'Q5B',
+                karma: { wisdom: +3, patience: +2 }
+            },
+            {
+                text: 'FUJO! Isso é GRANDE DEMAIS! Preciso avisar as autoridades!',
+                points: 50,
+                feedback: 'MEDO racional... mas ao tentar sair, a saída DESAPARECE!',
+                nextQuestionId: 'Q5C',
+                karma: { fear: +2, trapped: +1 }
+            },
+            {
+                text: 'DESTRUO o portal! Seja lá o que for, NÃO pode existir!',
+                points: 70,
+                feedback: 'AÇÃO DRÁSTICA! Você ataca com tudo... e o portal REAGE!',
+                nextQuestionId: 'Q5D',
+                karma: { destruction: +2, fear: +1 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q4B',
+        phase: 'cap4-conspiracao',
+        badge: '👁️ CAPÍTULO 4: A CONSPIRAÇÃO',
+        title: 'A Verdade Que Mata',
+        context: 'Você descobriu. A ORDEM DOS SILENCIOSOS não protege conhecimento... ela ESCONDE. O "tesouro" não é ouro. É uma ARMA. Uma arma que os ANTIGOS usaram para destruir sua própria civilização. E o REINO atual quer essa arma para... DOMINAR O MUNDO. Você está NO MEIO de uma guerra secreta. O Rei quer a arma. A Ordem quer destruí-la. Os Assassinos querem vendê-la. E VOCÊ tem a chave. Literalmente. Três facções te procuram. AGORA.',
+        options: [
+            {
+                text: 'DOU a chave para a ORDEM! Eles sabem o que fazer!',
+                points: 85,
+                feedback: 'CONFIANÇA! O líder da Ordem: "Você fez a escolha certa..."',
+                nextQuestionId: 'Q5E',
+                karma: { trust: +3, selflessness: +2 }
+            },
+            {
+                text: 'DOU a chave para o REI! Ordem é importante!',
+                points: 70,
+                feedback: 'LEALDADE ao trono! O Rei sorri: "Você será recompensado..."',
+                nextQuestionId: 'Q5F',
+                karma: { loyalty: +2, naivety: +1 }
+            },
+            {
+                text: 'DOU a chave para os ASSASSINOS! Eles pagam BEM!',
+                points: 60,
+                feedback: 'GANÂNCIA! Ouro brilha... mas há sangue nas moedas...',
+                nextQuestionId: 'Q5G',
+                karma: { greed: +3, pragmatism: +1 }
+            },
+            {
+                text: 'DESTRUO a chave! "Se ninguém pode ter, ninguém terá!"',
+                points: 95,
+                feedback: 'SACRIFÍCIO SUPREMO! A chave se dissolve... o mundo treme...',
+                nextQuestionId: 'Q5H',
+                karma: { sacrifice: +5, wisdom: +3 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q4C',
+        phase: 'cap4-traicao',
+        badge: '🗡️ CAPÍTULO 4: A TRAIÇÃO',
+        title: 'Quem Você Realmente É',
+        context: 'PLOT TWIST: Você NUNCA foi um escolhido aleatório. O velho era seu PAI. Você não sabia. Ele te abandonou quando criança para "proteger" você. A Ordem, o Rei, os Assassinos... TODOS sabem quem você é. Você é o HERDEIRO da linhagem dos Guardiões. O mapa estava no seu SANGUE desde sempre. E a pessoa que te "ajudou" até agora? TRAIU você. Te entregou para quem pagou mais. Você está CERCADO. Amarrado. Prestes a ser EXECUTADO. Última chance.',
+        options: [
+            {
+                text: 'GRITO: "EU SOU O GUARDIÃO! Vocês PRECISAM de mim vivo!"',
+                points: 80,
+                feedback: 'BLEFE DESESPERADO! ...e funciona. Eles hesitam...',
+                nextQuestionId: 'Q5I',
+                karma: { bluff: +2, survival: +2 }
+            },
+            {
+                text: 'ACEITO meu destino. "Façam o que devem. Mas saibam: vocês falharão sem mim."',
+                points: 85,
+                feedback: 'DIGNIDADE na morte. O executor... PARA. Respeito inesperado...',
+                nextQuestionId: 'Q5J',
+                karma: { acceptance: +3, dignity: +2 }
+            },
+            {
+                text: 'ATACO! Mesmo amarrado, uso tudo - dentes, cabeça, pernas! LUTO!',
+                points: 75,
+                feedback: 'FÚRIA ANIMAL! Você quebra as cordas com força sobre-humana...',
+                nextQuestionId: 'Q5K',
+                karma: { rage: +3, strength: +2 }
+            },
+            {
+                text: 'OFEREÇO ACORDO: "Me libertem e eu divido o tesouro com vocês!"',
+                points: 70,
+                feedback: 'NEGOCIAÇÃO sob pressão. Eles se entreolham...',
+                nextQuestionId: 'Q5L',
+                karma: { negotiation: +2, desperation: +1 }
+            }
+        ]
+    },
+
+    // ========================================
+    // CAPÍTULO 5: FINAIS MÚLTIPLOS
+    // ========================================
+    
+    // FINAL 1: Entrou no portal
+    {
+        id: 'Q5A',
+        phase: 'cap5-portal',
+        badge: '🌀 CAPÍTULO 5: O VAZIO',
+        title: 'Entre Mundos',
+        context: 'Você atravessa o portal. TUDO se desfaz. Você flutua em um VAZIO infinito. Sem tempo. Sem espaço. Sem corpo. Apenas CONSCIÊNCIA. Uma voz: "Você buscava tesouro. Mas tesouro é ilusão. O que você REALMENTE quer?" Você vê memórias: sua infância, seu pai, escolhas que fez. "Última pergunta: QUEM você é quando tudo é tirado?"',
+        options: [
+            {
+                text: 'Respondo: "Sou alguém que BUSCA verdade."',
+                points: 100,
+                feedback: 'ILUMINAÇÃO! O vazio brilha. Você entende TUDO...',
+                nextQuestionId: 'FINAL1-ILUMINADO',
+                karma: { enlightenment: +5 }
+            },
+            {
+                text: 'Respondo: "Sou alguém que protege outros."',
+                points: 95,
+                feedback: 'COMPAIXÃO! O vazio te abraça. Você vira GUARDIÃO eterno...',
+                nextQuestionId: 'FINAL2-GUARDIAO',
+                karma: { protection: +5 }
+            },
+            {
+                text: 'Respondo: "Sou nada. Apenas um humano perdido."',
+                points: 75,
+                feedback: 'HUMILDADE! O vazio te devolve ao mundo... transformado...',
+                nextQuestionId: 'FINAL3-RENASCIDO',
                 karma: { humility: +4 }
             },
             {
-                text: 'Analiso: "Isso é TESTE. Portal é armadilha!"',
-                points: 100,
-                feedback: 'DISCERNIMENTO! Você está CERTO!',
-                nextQuestionId: 'FINAL-REVELACAO',
-                karma: { wisdom: +5, perception: +3 }
-            }
-        ]
-    },
-
-    // ========================================
-    // FINAIS MÚLTIPLOS
-    // ========================================
-    {
-        id: 'FINAL-UNIAO',
-        phase: 'final-união',
-        badge: '🤝 UNIÃO SAGRADA',
-        title: 'O Poder da Colaboração',
-        context: 'Vocês entram JUNTOS. Dentro, 5 tesouros aparecem: Sabedoria, Coragem, Riqueza, Compaixão, Equilíbrio. Todos podem escolher. Qual você pega?',
-        options: [
-            {
-                text: 'O tesouro que CORRESPONDE ao meu caminho.',
-                points: 80,
-                feedback: 'Autenticidade! Você honra quem você é.',
-                nextQuestionId: 'END-ILUMINADO',
-                karma: { authenticity: +3 }
-            },
-            {
-                text: 'O que EU MAIS PRECISO (fraqueza).',
-                points: 90,
-                feedback: 'CRESCIMENTO! Você busca melhorar.',
-                nextQuestionId: 'END-ILUMINADO',
-                karma: { growth: +4 }
-            },
-            {
-                text: 'Deixo outros escolherem primeiro.',
-                points: 95,
-                feedback: 'HUMILDADE! Todos INSISTEM que você escolha primeiro!',
-                nextQuestionId: 'END-ILUMINADO',
-                karma: { humility: +5 }
-            },
-            {
-                text: 'Proponho: "Combinamos TODOS os 5!"',
-                points: 100,
-                feedback: 'VISÃO SUPREMA! Os tesouros se FUNDEM!',
-                nextQuestionId: 'END-TRANSCENDENTE',
-                karma: { wisdom: +5, unity: +5 }
-            }
-        ]
-    },
-
-    {
-        id: 'FINAL-REVELACAO',
-        phase: 'final-revelação',
-        badge: '💡 A VERDADE',
-        title: 'O Verdadeiro Tesouro',
-        context: 'Você descobriu: o portal era armadilha! O verdadeiro caminho está atrás - uma escada simples. Os outros quase caem na armadilha. Você grita para salvá-los?',
-        options: [
-            {
-                text: 'GRITO: "PAREM! É armadilha!"',
-                points: 95,
-                feedback: 'HEROÍSMO! Você salva todos.',
-                nextQuestionId: 'END-ILUMINADO',
-                karma: { heroism: +4 }
-            },
-            {
-                text: 'Subo sozinho. Cada um por si.',
-                points: 40,
-                feedback: 'Egoísmo. Vitória vazia e solitária.',
-                nextQuestionId: 'END-VAZIO',
-                karma: { selfishness: +3, loneliness: +2 }
-            },
-            {
-                text: 'Destruo portal E mostro caminho certo.',
-                points: 100,
-                feedback: 'LIDERANÇA SUPREMA! Elimina ilusão!',
-                nextQuestionId: 'END-TRANSCENDENTE',
-                karma: { leadership: +5, wisdom: +5 }
-            },
-            {
-                text: 'Aviso depois que entrar primeiro.',
-                points: 60,
-                feedback: 'Meio-termo egoísta. Metade morre. Culpa.',
-                nextQuestionId: 'END-CULPA',
-                karma: { guilt: +3 }
-            }
-        ]
-    },
-
-    {
-        id: 'FINAL-CONFLITO',
-        phase: 'final-conflito',
-        badge: '⚔️ BATALHA FINAL',
-        title: 'Guerra Pelo Tesouro',
-        context: 'Egoísmo causou GUERRA. Todos lutam. Sangue derrama. Você vê: ganância corrompeu todos. O que faz?',
-        options: [
-            {
-                text: 'Luto para VENCER! Vim até aqui!',
-                points: 40,
-                feedback: 'Você vence... coberto de sangue.',
-                nextQuestionId: 'END-VAZIO',
-                karma: { violence: +3 }
-            },
-            {
-                text: 'PARO e grito: "VEJAM O QUE SOMOS!"',
-                points: 90,
-                feedback: 'Sua voz ecoa. Todos PARAM. Você salvou todos!',
-                nextQuestionId: 'END-ILUMINADO',
-                karma: { wisdom: +4, leadership: +3 }
-            },
-            {
-                text: 'Fujo. Não vale a pena.',
-                points: 60,
-                feedback: 'Sobrevivência. Culpa te segue.',
-                nextQuestionId: 'END-RESIGNADO',
-                karma: { guilt: +2 }
-            },
-            {
-                text: 'Destruo portal: "Se não podemos compartilhar, ninguém terá!"',
-                points: 85,
-                feedback: 'Sacrifício heroico! Justiça.',
-                nextQuestionId: 'END-MARTIR',
-                karma: { sacrifice: +5 }
-            }
-        ]
-    },
-
-    {
-        id: 'FINAL-HONRA',
-        phase: 'final-honra',
-        badge: '🙏 HUMILDADE RECOMPENSADA',
-        title: 'A Câmara Final',
-        context: 'Sua humildade comoveu todos. Você entra primeiro por vontade coletiva. Dentro: um espelho gigante mostrando TODAS as suas escolhas. Uma voz: "O tesouro é QUEM VOCÊ SE TORNOU." Atrás do espelho: um baú com ouro OU livro de sabedoria infinita. Escolha.',
-        options: [
-            {
-                text: 'Escolho OURO. Farei bem com recursos.',
+                text: 'RECUSO responder: "Não aceito suas regras!"',
                 points: 70,
-                feedback: 'Pragmatismo. Você constrói hospitais, escolas...',
-                nextQuestionId: 'END-FILANTROPO',
-                karma: { pragmatism: +2, impact: +3 }
-            },
-            {
-                text: 'Escolho LIVRO. Sabedoria é imortal.',
-                points: 90,
-                feedback: 'Você se torna o maior mestre da história.',
-                nextQuestionId: 'END-MESTRE',
-                karma: { wisdom: +5, legacy: +4 }
-            },
-            {
-                text: 'Pego AMBOS. Mereço tudo!',
-                points: 30,
-                feedback: 'Ganância. O espelho se quebra. Você perde tudo.',
-                nextQuestionId: 'END-VAZIO',
-                karma: { greed: +3, loss: +2 }
-            },
-            {
-                text: 'Deixo AMBOS. "Já tenho o tesouro."',
-                points: 100,
-                feedback: 'TRANSCENDÊNCIA TOTAL! Iluminação absoluta!',
-                nextQuestionId: 'END-TRANSCENDENTE',
-                karma: { transcendence: +5, enlightenment: +5 }
+                feedback: 'REBELDIA! O vazio RI... e te ejeta violentamente...',
+                nextQuestionId: 'FINAL4-REJEITADO',
+                karma: { rebellion: +2 }
             }
         ]
     },
 
+    // FINAL 2: Estudou a cidade
+    {
+        id: 'Q5B',
+        phase: 'cap5-estudioso',
+        badge: '📖 CAPÍTULO 5: CONHECIMENTO PROIBIDO',
+        title: 'Os Diários dos Mortos',
+        context: 'Você lê os diários. HORROR. Os antigos não morreram. Eles SE TRANSFORMARAM. O "tesouro" é um dispositivo que TRANSCENDE a humanidade. Mas a um custo: você perde sua HUMANIDADE. Vira algo... ALÉM. Imortal. Poderoso. Mas SEM emoções. SEM amor. SEM dor. SOMENTE lógica pura. Os diários terminam: "Nós erramos. Não façam nossa escolha. Destruam. Ou sejam destruídos."',
+        options: [
+            {
+                text: 'USO o dispositivo! Quero TRANSCENDER! Humanidade é fraqueza!',
+                points: 75,
+                feedback: 'TRANSFORMAÇÃO! Você sente sua humanidade... desaparecer...',
+                nextQuestionId: 'FINAL5-TRANSCENDENTE',
+                karma: { transcendence: +5, loss: +3 }
+            },
+            {
+                text: 'DESTRUO o dispositivo! Humanidade é nossa força, não fraqueza!',
+                points: 100,
+                feedback: 'SABEDORIA SUPREMA! Você escolhe permanecer humano...',
+                nextQuestionId: 'FINAL6-HEROI',
+                karma: { wisdom: +5, humanity: +5 }
+            },
+            {
+                text: 'GUARDO o dispositivo! "Isso deve ser estudado, não usado nem destruído."',
+                points: 85,
+                feedback: 'RESPONSABILIDADE! Você se torna guardião do conhecimento...',
+                nextQuestionId: 'FINAL7-GUARDIAO-CONHECIMENTO',
+                karma: { responsibility: +4, wisdom: +3 }
+            },
+            {
+                text: 'FUJO e SELO a entrada! "Que isso nunca seja encontrado!"',
+                points: 80,
+                feedback: 'PROTEÇÃO! Você enterra o segredo para sempre...',
+                nextQuestionId: 'FINAL8-SILENCIOSO',
+                karma: { protection: +4, sacrifice: +2 }
+            }
+        ]
+    },
+
+    // Continuando os finais...
+    {
+        id: 'Q5C',
+        phase: 'cap5-preso',
+        badge: '🚪 CAPÍTULO 5: SEM SAÍDA',
+        title: 'A Prisão Eterna',
+        context: 'Você tentou fugir mas a saída desapareceu. Você está PRESO na cidade subterrânea. Sozinho. Para sempre? Dias passam. Semanas. Você explora. Come fungos luminescentes. Bebe água de poças. Está ficando... LOUCO? Ou ILUMINADO? Você começa a VER coisas. Os espíritos dos antigos. Eles falam. Oferecem conhecimento em troca de... algo.',
+        options: [
+            {
+                text: 'ACEITO! "Ensinem-me! O que querem em troca?"',
+                points: 75,
+                feedback: '"Sua LIBERDADE", eles sussurram. Você vira guardião eterno...',
+                nextQuestionId: 'FINAL9-GUARDIAO-PRESO',
+                karma: { sacrifice: +4, knowledge: +4 }
+            },
+            {
+                text: 'RECUSO! "Prefiro morrer livre que viver escravo!"',
+                points: 85,
+                feedback: 'Sua recusa QUEBRA a maldição! Um caminho se abre...',
+                nextQuestionId: 'FINAL10-ESCAPOU',
+                karma: { freedom: +5, courage: +3 }
+            },
+            {
+                text: 'NEGOCIO: "E se eu servir por 100 anos, depois sou livre?"',
+                points: 70,
+                feedback: '"Aceito", eles dizem. Seu longo serviço começa...',
+                nextQuestionId: 'FINAL11-SERVO-TEMPORAL',
+                karma: { compromise: +3, patience: +3 }
+            }
+        ]
+    },
+
+    {
+        id: 'Q5D',
+        phase: 'cap5-destruicao',
+        badge: '💥 CAPÍTULO 5: REAÇÃO EM CADEIA',
+        title: 'O Fim de Tudo',
+        context: 'Você ataca o portal. ERRO! A energia EXPLODE! A cidade inteira começa a DESMORONAR! Você corre. Pedras caem. O chão racha. Você sobe as escadas... mas elas estão DESABANDO! Você vê a luz do dia... TÃO PERTO... Sua mão estica... QUASE... De repente, alguém te PUXA pra cima!',
+        options: [
+            {
+                text: 'AGRADEÇO: "Você salvou minha vida!" Olho para o salvador...',
+                points: 80,
+                feedback: 'É... o VELHO! "Eu sempre volto, filho..." Ele estava vivo!',
+                nextQuestionId: 'FINAL12-REUNIAO',
+                karma: { gratitude: +3, reunion: +4 }
+            },
+            {
+                text: 'DESCONFIO: "Por que me salvou? O que quer?" Cautela primeiro!',
+                points: 75,
+                feedback: 'Sabedoria! Seu salvador revela: "Porque VOCÊ é especial..."',
+                nextQuestionId: 'FINAL13-REVELACAO',
+                karma: { wisdom: +2, suspicion: +1 }
+            }
+        ]
+    },
+
+    // Finais E-L baseados nas escolhas de Q4B e Q4C...
+    {
+        id: 'Q5E',
+        phase: 'cap5-ordem',
+        badge: '🛡️ FINAL: O PROTETOR',
+        title: 'Guardião da Ordem',
+        context: 'Você deu a chave para a Ordem. Eles a destroem. A ameaça acabou. Você é convidado a se juntar a eles. Vira GUARDIÃO OFICIAL. Sua vida agora: proteger segredos perigosos para que nunca sejam usados. É uma vida de sombras. De sacrifícios. Mas você dorme em PAZ sabendo que o mundo está mais seguro.',
+        options: [
+            {
+                text: 'ACEITO meu destino como Guardião. É meu propósito.',
+                points: 100,
+                feedback: 'FIM: O GUARDIÃO - Você vive para proteger a humanidade.',
+                nextQuestionId: 'ENDING-GUARDIAO-ORDEM',
+                karma: { purpose: +5 }
+            }
+        ]
+    },
+
+    // ... (Continuo criando os outros finais)
+
     // ========================================
-    // FINAIS (ENDs)
+    // FINAIS FINAIS (ENDINGS)
     // ========================================
+    
     {
-        id: 'END-TRANSCENDENTE',
-        phase: 'fim',
-        badge: '✨ O TRANSCENDENTE',
-        title: 'Além do Material',
-        context: 'Você transcendeu completamente o material. Não precisa de ouro nem livros - você SE TORNOU sabedoria viva. Você volta transformado, irradiando luz. Pessoas buscam você sem entender por quê. Você impacta milhões apenas EXISTINDO. O nível mais alto de consciência humana alcançado.',
+        id: 'FINAL1-ILUMINADO',
+        phase: 'ending',
+        badge: '✨ FINAL VERDADEIRO',
+        title: 'O Iluminado',
+        context: 'Você transcendeu. Não precisa de tesouro físico. VOCÊ se tornou tesouro - sabedoria viva, compaixão encarnada. Volta ao mundo comum mas transformado. Apenas sua PRESENÇA cura. Ensina. Transforma. Pessoas não entendem você, mas SENTEM. Você viveu a jornada completa. Compreendeu: o tesouro sempre foi a TRANSFORMAÇÃO. Nota: 100/100. Você é dos 1% que alcançaram iluminação verdadeira.',
         options: []
     },
 
     {
-        id: 'END-ILUMINADO',
-        phase: 'fim',
-        badge: '🌟 O ILUMINADO',
-        title: 'Sabedoria Conquistada',
-        context: 'Você entendeu: o verdadeiro tesouro era a jornada. Você volta transformado, sábio, compassivo, corajoso. Pessoas sentem sua presença. Você vive propósito profundo, impactando milhares. Maestria alcançada.',
+        id: 'FINAL2-GUARDIAO',
+        phase: 'ending',
+        badge: '🛡️ FINAL HEROICO',
+        title: 'O Guardião Eterno',
+        context: 'Você escolheu proteção. Vira guardião eterno da humanidade. Imortal. Invisível. Você protege o mundo de ameaças que ninguém sabe que existem. É solitário. É sacrifício. Mas é NECESSÁRIO. Séculos passam. Impérios nascem e caem. Você permanece. Guardiãozinho, você não é herói conhecido. Mas é herói REAL. Nota: 95/100. Sacrifício nobre.',
         options: []
     },
 
     {
-        id: 'END-MESTRE',
-        phase: 'fim',
-        badge: '📚 O MESTRE ETERNO',
-        title: 'Legado Imortal',
-        context: 'Com o livro de sabedoria infinita, você se torna o maior professor que o mundo viu. Suas lições ecoam por séculos. Você morre pobre em ouro, infinitamente rico em impacto. Nome nunca esquecido.',
+        id: 'FINAL3-RENASCIDO',
+        phase: 'ending',
+        badge: '🌱 FINAL DE RENOVAÇÃO',
+        title: 'O Renascido',
+        context: 'Você voltou transformado mas humano. Não transcendeu. EVOLUIU. Usa sua experiência para viver melhor. Ajuda outros. Construí família. Trabalha. Ama. Sofre. Cresce. É uma vida COMUM... mas profundamente SIGNIFICATIVA. Você não salvou o mundo. Você salvou A SI MESMO. E isso já é um tesouro. Nota: 85/100. Fim feliz e realista.',
         options: []
     },
 
     {
-        id: 'END-FILANTROPO',
-        phase: 'fim',
-        badge: '💰 O FILANTROPO',
-        title: 'Impacto Tangível',
-        context: 'Com o ouro, você constrói 50 hospitais, 100 escolas, alimenta 10 mil famílias. Recursos materiais transformados em mudança REAL e mensurável. Herói pragmático que salvou vidas concretas.',
+        id: 'FINAL6-HEROI',
+        phase: 'ending',
+        badge: '👑 FINAL ÉPICO',
+        title: 'O Herói da Humanidade',
+        context: 'Você destruiu o dispositivo. Salvou a humanidade de si mesma. Volta como HERÓI. Estátuas são erguidas. Histórias são contadas. Seu nome ecoa por gerações. Você vive longo e morre velho, cercado por aqueles que ama. No leito de morte, você sorri: "Eu escolhi certo." Nota: 100/100. Final épico perfeito.',
         options: []
     },
 
     {
-        id: 'END-VAZIO',
-        phase: 'fim',
-        badge: '⚫ O VAZIO',
-        title: 'Ganância Punida',
-        context: 'Ganância destruiu tudo. Você volta de mãos vazias. A jornada ensinou: querer TUDO resulta em NADA. Lição cara... mas necessária. Há sempre uma próxima jornada - se você aprender.',
+        id: 'ENDING-GUARDIAO-ORDEM',
+        phase: 'ending',
+        badge: '🗝️ FINAL SECRETO',
+        title: 'O Silencioso',
+        context: 'Você vira membro da Ordem dos Silenciosos. Sua existência é apagada. Registros destruídos. Você NUNCA existiu oficialmente. Vive nas sombras. Protege segredos. Impede catástrofes. Ninguém sabe seu nome. Ninguém sabe suas façanhas. Mas o MUNDO continua girando porque VOCÊ existe. É o herói mais solitário. Mais necessário. Mais esquecido. Nota: 90/100. Sacrifício absoluto.',
         options: []
     },
 
-    {
-        id: 'END-MARTIR',
-        phase: 'fim',
-        badge: '⚔️ O MÁRTIR',
-        title: 'Sacrifício Heroico',
-        context: 'Você morreu defendendo o certo. Sua morte inspirou revolução. Gerações contam sua história como símbolo de coragem. Você vive eternamente na memória coletiva. Herói verdadeiro.',
-        options: []
-    },
-
-    {
-        id: 'END-RESIGNADO',
-        phase: 'fim',
-        badge: '🏠 O RESIGNADO',
-        title: 'Vida Comum',
-        context: 'Você voltou para vida comum. Sem grandes vitórias, sem grandes derrotas. Às vezes pergunta "e se"... mas logo afasta o pensamento. A vida segue. Talvez na próxima encarnação você tenha mais coragem.',
-        options: []
-    },
-
-    {
-        id: 'END-CULPA',
-        phase: 'fim',
-        badge: '💔 O PESO DA CULPA',
-        title: 'Decisões e Consequências',
-        context: 'Suas escolhas egoístas causaram mortes. Você alcançou o tesouro... mas a culpa te assombra. Toda noite você vê os rostos daqueles que você poderia ter salvado. Riqueza não compra paz interior. Lição brutal aprendida.',
-        options: []
-    },
-
+    // Final genérico
     {
         id: 'END',
-        phase: 'fim',
+        phase: 'ending',
         badge: '🏁 FIM',
         title: 'Fim da Jornada',
         context: 'Sua jornada terminou. Você aprendeu sobre si mesmo.',
