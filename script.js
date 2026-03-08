@@ -1,13 +1,45 @@
-// ===== GAME STATE =====
+// ===== GAME STATE COM KARMA TRACKING =====
 let gameState = {
-    currentQuestionId: 'Q1', // Agora usamos IDs ao invés de índices
+    currentQuestionId: 'Q1',
     questionsAnswered: 0,
     answers: [],
     totalScore: 0,
-    timeLeft: 180, // 3 minutos em segundos
-    timerInterval: null,
+    karma: {
+        // Virtudes Positivas
+        courage: 0,
+        wisdom: 0,
+        compassion: 0,
+        patience: 0,
+        integrity: 0,
+        humility: 0,
+        sacrifice: 0,
+        trust: 0,
+        
+        // Características Neutras
+        pragmatism: 0,
+        tactics: 0,
+        survival: 0,
+        independence: 0,
+        
+        // Emoções/Estados
+        fear: 0,
+        desperation: 0,
+        thirst: 0,
+        hunger: 0,
+        urgency: 0,
+        doubt: 0,
+        
+        // Negativos
+        greed: 0,
+        pride: 0,
+        violence: 0,
+        deception: 0,
+        selfishness: 0
+    },
+    emotionalJourney: [], // Track de como emoções mudaram
+    path: ['Q1'], // IDs das questões percorridas
     startTime: null,
-    path: [] // Track do caminho percorrido
+    timeSpent: 0
 };
 
 // ===== PARTICLES ANIMATION =====
@@ -75,74 +107,26 @@ function startJourney() {
         questionsAnswered: 0,
         answers: [],
         totalScore: 0,
-        timeLeft: 180,
-        timerInterval: null,
+        karma: {
+            courage: 0, wisdom: 0, compassion: 0, patience: 0,
+            integrity: 0, humility: 0, sacrifice: 0, trust: 0,
+            pragmatism: 0, tactics: 0, survival: 0, independence: 0,
+            fear: 0, desperation: 0, thirst: 0, hunger: 0,
+            urgency: 0, doubt: 0,
+            greed: 0, pride: 0, violence: 0, deception: 0, selfishness: 0
+        },
+        emotionalJourney: [],
+        path: ['Q1'],
         startTime: Date.now(),
-        path: ['Q1']
+        timeSpent: 0
     };
 
     showScreen('journey-screen');
     loadQuestion();
-    startTimer();
-}
-
-// ===== TIMER FUNCTIONS =====
-function startTimer() {
-    updateTimerDisplay();
-
-    if (gameState.timerInterval) {
-        clearInterval(gameState.timerInterval);
-    }
-
-    gameState.timerInterval = setInterval(() => {
-        gameState.timeLeft--;
-        updateTimerDisplay();
-
-        if (gameState.timeLeft <= 0) {
-            handleTimeout();
-        } else if (gameState.timeLeft <= 30) {
-            document.getElementById('timer').classList.add('warning');
-        }
-    }, 1000);
-}
-
-function updateTimerDisplay() {
-    const minutes = Math.floor(gameState.timeLeft / 60);
-    const seconds = gameState.timeLeft % 60;
-    const display = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    document.getElementById('timer').textContent = display;
-}
-
-function stopTimer() {
-    if (gameState.timerInterval) {
-        clearInterval(gameState.timerInterval);
-        gameState.timerInterval = null;
-    }
-}
-
-function resetTimer() {
-    stopTimer();
-    gameState.timeLeft = 180;
-    document.getElementById('timer').classList.remove('warning');
-    startTimer();
-}
-
-function handleTimeout() {
-    stopTimer();
-
-    // Auto-seleciona opção aleatória
-    const question = journeyQuestions.find(q => q.id === gameState.currentQuestionId);
-    if (!question) return;
-
-    const randomOption = question.options[Math.floor(Math.random() * question.options.length)];
-
-    alert('⏰ Tempo esgotado! Uma escolha foi feita por você...');
-    handleAnswer(randomOption, 0);
 }
 
 // ===== LOAD QUESTION =====
 function loadQuestion() {
-    // Busca a questão pelo ID
     const question = journeyQuestions.find(q => q.id === gameState.currentQuestionId);
 
     if (!question) {
@@ -150,18 +134,16 @@ function loadQuestion() {
         return;
     }
 
-    // Se chegamos no END, termina a jornada
-    if (question.id === 'END') {
+    // Se chegou em um final (ENDING ou FINAL)
+    if (question.id.startsWith('FINAL') || question.id.startsWith('ENDING') || question.id === 'END') {
         finishJourney();
         return;
     }
 
-    // Calcula progresso baseado em quantas questões respondeu
-    // Estimamos ~12 questões no caminho principal
-    const estimatedTotal = 12;
-    const progress = Math.min((gameState.questionsAnswered / estimatedTotal) * 100, 95); // Max 95% até o fim
-
-    // Update progress
+    // Calcula progresso baseado no capítulo
+    const progress = calculateProgress(question.phase);
+    
+    // Update UI
     document.getElementById('current-obstacle').textContent = gameState.questionsAnswered + 1;
     document.getElementById('progress-percent').textContent = Math.round(progress) + '%';
     document.getElementById('progress-fill').style.width = progress + '%';
@@ -178,7 +160,7 @@ function loadQuestion() {
     question.options.forEach((option, index) => {
         const button = document.createElement('button');
         button.className = 'option-button';
-        button.onclick = () => handleAnswer(option, index);
+        button.onclick = () => handleAnswer(option, index, question);
 
         button.innerHTML = `
             <div class="option-content">
@@ -189,14 +171,41 @@ function loadQuestion() {
 
         optionsContainer.appendChild(button);
     });
+}
 
-    resetTimer();
+// ===== CALCULAR PROGRESSO =====
+function calculateProgress(phase) {
+    // Baseado no capítulo
+    const phaseProgress = {
+        'cap1-chamado': 5,
+        'cap2-aceitou': 15,
+        'cap2-recusou': 15,
+        'cap2-desconfiou': 15,
+        'cap3-fuga-solo': 35,
+        'cap3-tatico': 35,
+        'cap3-rendido': 35,
+        'cap3-retorno': 35,
+        'cap3-fuga-egoista': 35,
+        'cap3-confronto': 35,
+        'cap3-segredo': 35,
+        'cap3-ladrao': 35,
+        'cap3-confronto-assassinos': 35,
+        'cap4-cidade-perdida': 60,
+        'cap4-conspiracao': 60,
+        'cap4-traicao': 60,
+        'cap5-portal': 85,
+        'cap5-estudioso': 85,
+        'cap5-preso': 85,
+        'cap5-destruicao': 85,
+        'cap5-ordem': 85,
+        'ending': 100
+    };
+
+    return phaseProgress[phase] || Math.min((gameState.questionsAnswered / 15) * 100, 95);
 }
 
 // ===== HANDLE ANSWER =====
-function handleAnswer(option, optionIndex) {
-    stopTimer();
-
+function handleAnswer(option, optionIndex, currentQuestion) {
     // Disable all buttons
     document.querySelectorAll('.option-button').forEach(btn => {
         btn.disabled = true;
@@ -208,34 +217,48 @@ function handleAnswer(option, optionIndex) {
         selectedButton.classList.add('selected');
     }
 
-    // Get current question
-    const currentQuestion = journeyQuestions.find(q => q.id === gameState.currentQuestionId);
-
-    // Save answer
+    // Save answer with full context
     gameState.answers.push({
         questionId: gameState.currentQuestionId,
         phase: currentQuestion.phase,
+        badge: currentQuestion.badge,
         title: currentQuestion.title,
+        choice: option.text,
         points: option.points,
         feedback: option.feedback,
-        choice: option.text
+        karma: option.karma || {}
     });
 
+    // Update karma
+    if (option.karma) {
+        Object.keys(option.karma).forEach(key => {
+            if (gameState.karma[key] !== undefined) {
+                gameState.karma[key] += option.karma[key];
+            }
+        });
+        
+        // Snapshot emocional
+        gameState.emotionalJourney.push({
+            question: gameState.currentQuestionId,
+            karma: {...gameState.karma}
+        });
+    }
+
+    // Update score
     gameState.totalScore += option.points;
     gameState.questionsAnswered++;
 
-    // Determina próxima questão baseada na escolha
-    const nextQuestionId = option.nextQuestionId;
+    // Update path
+    if (option.nextQuestionId) {
+        gameState.path.push(option.nextQuestionId);
+    }
 
     // Show feedback briefly
     setTimeout(() => {
-        if (nextQuestionId && nextQuestionId !== 'END') {
-            // Vai para a próxima questão específica
-            gameState.currentQuestionId = nextQuestionId;
-            gameState.path.push(nextQuestionId);
+        if (option.nextQuestionId) {
+            gameState.currentQuestionId = option.nextQuestionId;
             loadQuestion();
         } else {
-            // Chegou no fim
             finishJourney();
         }
     }, 1500);
@@ -243,20 +266,24 @@ function handleAnswer(option, optionIndex) {
 
 // ===== FINISH JOURNEY =====
 function finishJourney() {
-    stopTimer();
+    gameState.timeSpent = Math.floor((Date.now() - gameState.startTime) / 1000);
+    
     showScreen('teaser-screen');
 
-    // Save to localStorage for results
+    // Save to localStorage
     localStorage.setItem('journeyResults', JSON.stringify({
         score: gameState.totalScore,
         answers: gameState.answers,
-        path: gameState.path, // Salva o caminho percorrido
+        karma: gameState.karma,
+        emotionalJourney: gameState.emotionalJourney,
+        path: gameState.path,
         questionsAnswered: gameState.questionsAnswered,
+        timeSpent: gameState.timeSpent,
         date: new Date().toISOString()
     }));
 }
 
-// ===== PAYMENT METHODS =====
+// ===== PAYMENT =====
 function showPayment() {
     showScreen('payment-screen');
 }
@@ -305,62 +332,241 @@ function simulatePayment() {
     }, 2000);
 }
 
-// ===== SHOW RESULTS =====
+// ===== SHOW RESULTS (ANÁLISE PROFUNDA) =====
 function showResults() {
     showScreen('results-screen');
 
     const results = JSON.parse(localStorage.getItem('journeyResults'));
-    const score = results.score;
+    
+    // Calcula nota final (0-100)
+    const finalScore = calculateFinalScore(results);
+    
+    // Determina arquétipo
+    const archetype = determineArchetype(results);
+    
+    // Análise emocional
+    const emotionalAnalysis = analyzeEmotions(results.karma);
+    
+    // Conselhos personalizados
+    const advice = generateAdvice(results.karma, emotionalAnalysis);
 
-    // Calcula score máximo baseado em quantas questões foram respondidas
-    const questionsAnswered = results.answers.length;
-    const maxScore = questionsAnswered * 100; // 100 pontos por questão
-
-    const percentage = Math.round((score / maxScore) * 100);
-
-    // Update main score
-    document.getElementById('final-score').textContent = percentage + '%';
-
-    // Determine archetype
-    const archetype = getArchetype(percentage, results.answers);
+    // Update UI
+    document.getElementById('final-score').textContent = finalScore + '%';
     document.getElementById('archetype-title').textContent = archetype.title;
     document.getElementById('archetype-description').textContent = archetype.description;
 
     // Build journey path
     buildJourneyPath(results.answers);
 
-    // Build insights
-    buildInsights(results.answers, percentage);
+    // Build emotional radar
+    buildEmotionalRadar(results.karma);
+
+    // Show insights
+    buildInsights(emotionalAnalysis, advice);
 }
 
-// ===== ARCHETYPE DETERMINATION =====
-function getArchetype(percentage, answers) {
-    if (percentage >= 85) {
+// ===== CALCULAR NOTA FINAL =====
+function calculateFinalScore(results) {
+    const maxPossibleScore = results.questionsAnswered * 100;
+    const rawPercentage = (results.score / maxPossibleScore) * 100;
+    
+    // Bônus por virtudes
+    const virtueBonus = (
+        results.karma.courage * 2 +
+        results.karma.wisdom * 3 +
+        results.karma.compassion * 3 +
+        results.karma.sacrifice * 4 +
+        results.karma.integrity * 2
+    );
+    
+    // Penalidade por vícios
+    const vicePenalty = (
+        results.karma.greed * 3 +
+        results.karma.violence * 2 +
+        results.karma.selfishness * 3 +
+        results.karma.deception * 2
+    );
+    
+    // Score final
+    const finalScore = Math.max(0, Math.min(100, rawPercentage + virtueBonus - vicePenalty));
+    
+    return Math.round(finalScore);
+}
+
+// ===== DETERMINAR ARQUÉTIPO =====
+function determineArchetype(results) {
+    const k = results.karma;
+    
+    // Identifica traço dominante
+    const traits = {
+        courage: k.courage,
+        wisdom: k.wisdom,
+        compassion: k.compassion,
+        pragmatism: k.pragmatism,
+        fear: k.fear,
+        greed: k.greed
+    };
+    
+    const dominant = Object.keys(traits).reduce((a, b) => traits[a] > traits[b] ? a : b);
+    
+    // Arquétipos baseados em combinações
+    if (k.wisdom > 15 && k.compassion > 10) {
         return {
             title: '🌟 O Iluminado',
-            description: 'Você compreendeu que o verdadeiro tesouro é a transformação pessoal. Suas escolhas revelam sabedoria, compaixão e coragem extraordinárias.'
-        };
-    } else if (percentage >= 70) {
-        return {
-            title: '🏆 O Sábio Aventureiro',
-            description: 'Você equilibrou coragem com prudência, generosidade com auto-preservação. Suas escolhas mostram maturidade e crescimento.'
-        };
-    } else if (percentage >= 55) {
-        return {
-            title: '⚔️ O Guerreiro Cauteloso',
-            description: 'Você enfrentou a jornada com determinação, mas às vezes o medo guiou suas escolhas. Ainda há muito a aprender.'
-        };
-    } else if (percentage >= 40) {
-        return {
-            title: '🛡️ O Sobrevivente',
-            description: 'Você focou em segurança e auto-preservação. A jornada te ensinou que às vezes é preciso arriscar para crescer.'
-        };
-    } else {
-        return {
-            title: '🌱 O Aprendiz',
-            description: 'Sua jornada foi mais sobre descobrir seus limites do que sobre o tesouro. Há muito potencial em você esperando para ser revelado.'
+            description: 'Você trilhou o caminho da sabedoria compassiva. Suas escolhas revelam profundo entendimento da natureza humana e genuíno desejo de ajudar outros. Você não buscou poder ou riqueza - buscou VERDADE. E a encontrou.'
         };
     }
+    
+    if (k.courage > 15 && k.sacrifice > 8) {
+        return {
+            title: '⚔️ O Herói Verdadeiro',
+            description: 'Coragem sem egoísmo. Você enfrentou perigos mortais não por glória, mas porque era o certo a fazer. Seus sacrifícios salvaram outros. Você é o tipo raro de herói que o mundo precisa desesperadamente.'
+        };
+    }
+    
+    if (k.wisdom > 12 && k.tactics > 8) {
+        return {
+            title: '🧠 O Estrategista Sábio',
+            description: 'Você pensa 10 passos à frente. Suas escolhas demonstram inteligência aguçada e planejamento cuidadoso. Você não confia em sorte - confia em ESTRATÉGIA. E por isso, você vence.'
+        };
+    }
+    
+    if (k.compassion > 12 && k.sacrifice > 6) {
+        return {
+            title: '❤️ O Guardião Compassivo',
+            description: 'Seu coração guia suas ações. Você escolheu proteger e curar mesmo quando isso te custou. Empatia profunda e vontade genuína de aliviar sofrimento definem quem você é. O mundo é melhor porque você existe.'
+        };
+    }
+    
+    if (k.pragmatism > 12 && k.survival > 8) {
+        return {
+            title: '🎯 O Sobrevivente Pragmático',
+            description: 'Você entende a realidade crua: sobrevivência exige decisões difíceis. Suas escolhas foram práticas, calculadas, eficientes. Você não se ilude com idealismo - você lida com o que É, não com o que deveria ser.'
+        };
+    }
+    
+    if (k.fear > 10 && k.desperation > 8) {
+        return {
+            title: '😰 O Assombrado',
+            description: 'Medo e desespero dominaram sua jornada. Você sobreviveu... mas a que custo? Suas escolhas foram guiadas por pânico, não por razão. Há lições aqui sobre enfrentar medos ao invés de fugir deles.'
+        };
+    }
+    
+    if (k.greed > 10 || k.selfishness > 10) {
+        return {
+            title: '💰 O Ganancioso',
+            description: 'Você priorizou ganho pessoal acima de tudo. Suas escolhas revelam fome por poder, riqueza, vantagem. Você pode ter "vencido"... mas perdeu algo mais valioso no processo: sua humanidade.'
+        };
+    }
+    
+    // Default
+    return {
+        title: '🌱 O Aprendiz',
+        description: 'Sua jornada foi exploratória. Você ainda está descobrindo quem é. Não demonstrou traços dominantes fortes - o que significa que seu caráter ainda está sendo moldado. E isso é OK. Crescimento é um processo.'
+    };
+}
+
+// ===== ANALISAR EMOÇÕES =====
+function analyzeEmotions(karma) {
+    const analysis = {
+        strengths: [],
+        weaknesses: [],
+        dominantEmotion: '',
+        balance: 0
+    };
+    
+    // Identifica forças (karma positivo alto)
+    if (karma.courage >= 8) analysis.strengths.push({ trait: 'Coragem', value: karma.courage });
+    if (karma.wisdom >= 8) analysis.strengths.push({ trait: 'Sabedoria', value: karma.wisdom });
+    if (karma.compassion >= 8) analysis.strengths.push({ trait: 'Compaixão', value: karma.compassion });
+    if (karma.patience >= 6) analysis.strengths.push({ trait: 'Paciência', value: karma.patience });
+    if (karma.sacrifice >= 6) analysis.strengths.push({ trait: 'Sacrifício', value: karma.sacrifice });
+    
+    // Identifica fraquezas (karma negativo alto ou falta de positivos)
+    if (karma.fear >= 8) analysis.weaknesses.push({ trait: 'Medo Excessivo', value: karma.fear });
+    if (karma.greed >= 6) analysis.weaknesses.push({ trait: 'Ganância', value: karma.greed });
+    if (karma.violence >= 6) analysis.weaknesses.push({ trait: 'Violência', value: karma.violence });
+    if (karma.selfishness >= 6) analysis.weaknesses.push({ trait: 'Egoísmo', value: karma.selfishness });
+    if (karma.courage < 3 && karma.fear > 5) analysis.weaknesses.push({ trait: 'Falta de Coragem', value: 0 });
+    if (karma.compassion < 3) analysis.weaknesses.push({ trait: 'Falta de Empatia', value: 0 });
+    
+    // Emoção dominante
+    const emotions = {
+        'Medo': karma.fear,
+        'Coragem': karma.courage,
+        'Sabedoria': karma.wisdom,
+        'Desespero': karma.desperation,
+        'Compaixão': karma.compassion
+    };
+    analysis.dominantEmotion = Object.keys(emotions).reduce((a, b) => emotions[a] > emotions[b] ? a : b);
+    
+    // Balanço emocional (0-100, quanto maior melhor)
+    const positive = karma.courage + karma.wisdom + karma.compassion + karma.patience;
+    const negative = karma.fear + karma.greed + karma.violence + karma.selfishness;
+    analysis.balance = Math.max(0, Math.min(100, 50 + (positive - negative) * 3));
+    
+    return analysis;
+}
+
+// ===== GERAR CONSELHOS =====
+function generateAdvice(karma, analysis) {
+    const advice = [];
+    
+    // Conselhos baseados em fraquezas
+    if (karma.fear > 8) {
+        advice.push({
+            weakness: 'Medo Excessivo',
+            mission: 'Missão: Coragem Pequena',
+            description: 'Faça UMA coisa por dia que te assusta (mesmo que seja pequena). Ligue ao invés de mandar mensagem. Fale com um desconhecido. Peça desconto. Pequenos atos de coragem criam músculos de bravura.',
+            why: 'No jogo, medo paralisou você. Na vida real, crescimento vive do outro lado do medo.'
+        });
+    }
+    
+    if (karma.compassion < 3 || karma.selfishness > 6) {
+        advice.push({
+            weakness: 'Falta de Compaixão',
+            mission: 'Missão: Compaixão em Ação',
+            description: 'Ajude alguém SEM esperar nada em troca. Pague o café de quem está atrás de você. Escute REALMENTE alguém que precisa. Faça uma boa ação anônima.',
+            why: 'No jogo, você ignorou pedidos de ajuda. Generosidade sem expectativa transforma sua alma.'
+        });
+    }
+    
+    if (karma.patience < 3 || karma.urgency > 8) {
+        advice.push({
+            weakness: 'Impaciência',
+            mission: 'Missão: Paciência Estratégica',
+            description: 'Dedique 20 minutos por dia a algo que exige PACIÊNCIA: meditar, ler um livro denso, aprender algo novo devagar, cozinhar uma receita complexa.',
+            why: 'No jogo, você sempre escolheu o caminho rápido. As melhores coisas demoram.'
+        });
+    }
+    
+    if (karma.greed > 6) {
+        advice.push({
+            weakness: 'Ganância',
+            mission: 'Missão: Generosidade Radical',
+            description: 'DOE algo que você realmente gosta (não lixo). Ajude alguém financeiramente sem esperar retorno. Pratique desapego.',
+            why: 'No jogo, você priorizou ganho pessoal. Aprenda que dar é mais satisfatório que acumular.'
+        });
+    }
+    
+    if (karma.wisdom < 5) {
+        advice.push({
+            weakness: 'Falta de Reflexão',
+            mission: 'Missão: Diário de Sabedoria',
+            description: 'Todo dia, escreva: 1) O que aprendi hoje? 2) Que erro cometi? 3) Como posso melhorar amanhã? Reflexão diária cria sabedoria.',
+            why: 'No jogo, você agiu sem pensar. Sabedoria vem de refletir sobre experiências.'
+        });
+    }
+    
+    // Sempre adiciona gratidão
+    advice.push({
+        weakness: 'Bônus Universal',
+        mission: 'Missão: Gratidão Diária',
+        description: 'Escreva 3 gratidões por dia durante 7 dias (antes de dormir). Podem ser pequenas: "Café quente" vale! Foque em SENTIR a gratidão.',
+        why: 'Pessoas gratas são mais felizes, resilientes e bem-sucedidas. Gratidão muda sua química cerebral.'
+    });
+    
+    return advice.slice(0, 4); // Máximo 4 missões
 }
 
 // ===== BUILD JOURNEY PATH =====
@@ -377,7 +583,9 @@ function buildJourneyPath(answers) {
         step.innerHTML = `
             <div class="step-number">${index + 1}</div>
             <div class="step-content">
+                <div class="step-badge">${answer.badge}</div>
                 <div class="step-title">${answer.title}</div>
+                <div class="step-choice">"${answer.choice}"</div>
                 <div class="step-result">${answer.feedback} (${pointsPercent}% de sabedoria)</div>
             </div>
         `;
@@ -386,45 +594,81 @@ function buildJourneyPath(answers) {
     });
 }
 
-// ===== BUILD INSIGHTS =====
-function buildInsights(answers, percentage) {
-    const insightsContainer = document.getElementById('insights-grid');
-    insightsContainer.innerHTML = '';
+// ===== BUILD EMOTIONAL RADAR =====
+function buildEmotionalRadar(karma) {
+    const radarContainer = document.getElementById('emotional-radar');
+    if (!radarContainer) return;
 
-    // Calculate category scores
-    const compassion = calculateCategoryScore(answers, ['encontro', 'escolha-moral', 'sacrifício']);
-    const wisdom = calculateCategoryScore(answers, ['início', 'teste', 'revelação']);
-    const courage = calculateCategoryScore(answers, ['primeiro-desafio', 'montanha', 'quase-lá']);
-    const creativity = calculateCategoryScore(answers, ['preparação', 'deserto', 'ilusão']);
-
-    const insights = [
-        { label: 'Compaixão', value: compassion, max: 300 },
-        { label: 'Sabedoria', value: wisdom, max: 300 },
-        { label: 'Coragem', value: courage, max: 300 },
-        { label: 'Criatividade', value: creativity, max: 300 }
+    const emotions = [
+        { label: 'Coragem', value: Math.min(100, karma.courage * 10), color: '#ef4444' },
+        { label: 'Sabedoria', value: Math.min(100, karma.wisdom * 10), color: '#8b5cf6' },
+        { label: 'Compaixão', value: Math.min(100, karma.compassion * 10), color: '#ec4899' },
+        { label: 'Pragmatismo', value: Math.min(100, karma.pragmatism * 10), color: '#3b82f6' },
+        { label: 'Medo', value: Math.min(100, karma.fear * 10), color: '#6b7280' },
+        { label: 'Ganância', value: Math.min(100, karma.greed * 10), color: '#f59e0b' }
     ];
 
-    insights.forEach(insight => {
-        const percent = Math.round((insight.value / insight.max) * 100);
-
-        const card = document.createElement('div');
-        card.className = 'insight-card';
-        card.innerHTML = `
-            <div class="insight-label">${insight.label}</div>
-            <div class="insight-value">${percent}%</div>
-            <div class="insight-bar">
-                <div class="insight-fill" style="width: ${percent}%"></div>
+    radarContainer.innerHTML = emotions.map(emotion => `
+        <div class="emotion-bar">
+            <div class="emotion-label">${emotion.label}</div>
+            <div class="emotion-track">
+                <div class="emotion-fill" style="width: ${emotion.value}%; background: ${emotion.color}"></div>
             </div>
-        `;
-
-        insightsContainer.appendChild(card);
-    });
+            <div class="emotion-value">${emotion.value}%</div>
+        </div>
+    `).join('');
 }
 
-function calculateCategoryScore(answers, phases) {
-    return answers
-        .filter(a => phases.includes(a.phase))
-        .reduce((sum, a) => sum + a.points, 0);
+// ===== BUILD INSIGHTS (Análise + Conselhos) =====
+function buildInsights(analysis, advice) {
+    const insightsContainer = document.getElementById('insights-grid');
+    if (!insightsContainer) return;
+
+    insightsContainer.innerHTML = `
+        <div class="insight-section">
+            <h3>💪 Suas Forças</h3>
+            ${analysis.strengths.length > 0 ? 
+                analysis.strengths.map(s => `<div class="strength-item">✅ ${s.trait} (Nível: ${s.value})</div>`).join('') :
+                '<div class="strength-item">⚠️ Nenhuma força dominante detectada</div>'
+            }
+        </div>
+
+        <div class="insight-section">
+            <h3>⚠️ Áreas de Melhoria</h3>
+            ${analysis.weaknesses.length > 0 ?
+                analysis.weaknesses.map(w => `<div class="weakness-item">❌ ${w.trait}</div>`).join('') :
+                '<div class="weakness-item">✅ Sem fraquezas críticas detectadas!</div>'
+            }
+        </div>
+
+        <div class="insight-section">
+            <h3>🎯 Emoção Dominante</h3>
+            <div class="dominant-emotion">${analysis.dominantEmotion}</div>
+            <div class="balance-meter">
+                <div class="balance-label">Balanço Emocional:</div>
+                <div class="balance-bar">
+                    <div class="balance-fill" style="width: ${analysis.balance}%"></div>
+                </div>
+                <div class="balance-value">${analysis.balance}%</div>
+            </div>
+        </div>
+
+        <div class="insight-section missions-section">
+            <h3>🎮 Missões na Vida Real</h3>
+            <p class="missions-intro">Baseado nas suas escolhas no jogo, aqui estão missões REAIS para crescimento pessoal:</p>
+            ${advice.map((mission, index) => `
+                <div class="mission-card">
+                    <div class="mission-header">
+                        <span class="mission-number">${index + 1}</span>
+                        <span class="mission-title">${mission.mission}</span>
+                    </div>
+                    <div class="mission-weakness">Trabalha em: ${mission.weakness}</div>
+                    <div class="mission-description">${mission.description}</div>
+                    <div class="mission-why"><strong>Por quê?</strong> ${mission.why}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
 
 // ===== RESET JOURNEY =====
