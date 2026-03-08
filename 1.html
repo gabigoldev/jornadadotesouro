@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Jornada do Tesouro - Descubra seu Destino</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Canvas para partículas de fundo -->
+    <canvas id="particles"></canvas>
+
+    <!-- LANDING PAGE -->
+    <div id="landing-screen" class="screen active">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">
+                    <span class="badge-icon">🗺️</span>
+                    <span class="badge-text">UMA JORNADA ÚNICA</span>
+                </div>
+
+                <h1 class="title">
+                    <span class="gradient-text">A JORNADA</span>
+                    <span class="gradient-text">DO TESOURO</span>
+                </h1>
+
+                <p class="subtitle">
+                    Uma antiga lenda fala de um tesouro escondido no fim do mundo...<br/> Mas a verdadeira riqueza pode estar onde você menos espera.
+                </p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">⚔️</div>
+                        <div class="stat-label">12 Obstáculos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-label">3 Min/Desafio</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💎</div>
+                        <div class="stat-label">1 Tesouro</div>
+                    </div>
+                </div>
+
+                <div class="story-preview">
+                    <p>
+                        "Em uma pequena vila, você recebe um mapa misterioso de um velho sábio. O mapa marca um tesouro lendário, mas o caminho está cheio de escolhas difíceis. Cada decisão te aproxima ou te afasta da riqueza.
+                        <strong>Você tem coragem de começar esta jornada?</strong>"
+                    </p>
+                </div>
+
+                <button class="cta-button" onclick="startJourney()">
+                    <span>INICIAR JORNADA</span>
+                    <span class="arrow">→</span>
+                </button>
+
+                <div class="social-proof">
+                    <span class="checkmark">✓</span>
+                    <span><strong>8.429</strong> aventureiros já descobriram seu destino hoje</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JOURNEY SCREEN -->
+    <div id="journey-screen" class="screen">
+        <div class="container">
+            <!-- Hearts Display -->
+            <div class="hearts-section">
+                <div id="hearts-container" class="hearts-container">
+                    <!-- Hearts will be added here by JS -->
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-section">
+                <div class="progress-info">
+                    <span class="progress-label">OBSTÁCULO <span id="current-obstacle">1</span>/12</span>
+                    <span class="progress-percent" id="progress-percent">8%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Timer -->
+            <div class="timer-section">
+                <div class="timer-icon">⏱️</div>
+                <div class="timer-display" id="timer">3:00</div>
+                <div class="timer-label">tempo restante</div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="question-card">
+                <div class="journey-badge" id="journey-badge">
+                    🗺️ INÍCIO DA JORNADA
+                </div>
+
+                <div class="question-content">
+                    <h2 class="question-title" id="question-title">Carregando...</h2>
+                    <p class="question-context" id="question-context"></p>
+                </div>
+
+                <div class="options-container" id="options-container">
+                    <!-- Options will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEASER SCREEN -->
+    <div id="teaser-screen" class="screen">
+        <div class="container">
+            <div class="teaser-content">
+                <div class="badge success-badge">
+                    <span class="badge-icon">✓</span>
+                    <span class="badge-text">JORNADA COMPLETA!</span>
+                </div>
+
+                <h1 class="title">
+                    <span class="gradient-text">Você Chegou</span>
+                    <span class="gradient-text">ao Fim!</span>
+                </h1>
+
+                <p class="subtitle">
+                    Sua jornada através dos <strong>12 obstáculos</strong> terminou...<br/> Mas o verdadeiro tesouro ainda é um mistério.
+                </p>
+
+                <!-- Blurred Result Preview -->
+                <div class="result-preview-wrapper">
+                    <div class="blur-overlay">
+                        <div class="lock-icon">🔒</div>
+                        <div class="lock-title">Resultado Bloqueado</div>
+                        <div class="lock-subtitle">Descubra por apenas R$ 10,00</div>
+                    </div>
+
+                    <div class="result-preview blurred">
+                        <div class="preview-card">
+                            <div class="preview-label">Distância do Tesouro</div>
+                            <div class="preview-value">??%</div>
+                            <div class="preview-sublabel">revelado</div>
+                        </div>
+
+                        <div class="preview-card">
+                            <div class="preview-label">Sua Classificação</div>
+                            <div class="preview-value">????</div>
+                            <div class="preview-sublabel">arquétipo revelado</div>
+                        </div>
+
+                        <div class="preview-chart">
+                            <div class="chart-placeholder">
+                                📊 Gráfico de Jornada Completo
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Box -->
+                <div class="cta-box">
+                    <div class="cta-header">
+                        <h3>Desbloqueie o Segredo do Tesouro</h3>
+                        <p>Descubra o quão perto você chegou + Análise completa da sua jornada</p>
+                    </div>
+
+                    <div class="cta-benefits">
+                        <div class="benefit">
+                            <span class="benefit-icon">🎯</span>
+                            <span>% Exata de Proximidade</span>
+                        </div>
+                        <div class="benefit">
+                            <span class="benefit-icon">📜</span>
+                            <span>Análise Detalhada</span>
+                        </div>
+                        <div class="benefit">
+                            <span class="benefit-icon">🏆</span>
+                            <span>Certificado Digital</span>
+                        </div>
+                    </div>
+
+                    <div class="price-section">
+                        <div class="price">R$ 10,00</div>
+                        <div class="price-label">Pagamento único • Acesso imediato</div>
+                    </div>
+
+                    <button class="cta-button" onclick="showPayment()">
+                        <span>DESBLOQUEAR AGORA</span>
+                        <span class="arrow">→</span>
+                    </button>
+
+                    <div class="social-proof">
+                        <span class="checkmark">✓</span>
+                        <span><strong>6.123</strong> pessoas já descobriram seu destino hoje</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT SCREEN -->
+    <div id="payment-screen" class="screen">
+        <div class="container payment-container">
+            <div class="payment-header">
+                <h2>Pagamento Seguro</h2>
+                <p>Desbloqueie seu resultado em segundos</p>
+            </div>
+
+            <div class="payment-card">
+                <!-- Payment Method Tabs -->
+                <div class="payment-tabs">
+                    <button class="payment-tab active" data-method="pix" onclick="switchPaymentMethod('pix')">
+                        <div class="tab-icon">⚡</div>
+                        <div class="tab-label">PIX</div>
+                        <div class="tab-sublabel">Instantâneo</div>
+                    </button>
+                    <button class="payment-tab" data-method="card" onclick="switchPaymentMethod('card')">
+                        <div class="tab-icon">💳</div>
+                        <div class="tab-label">Cartão</div>
+                        <div class="tab-sublabel">Crédito/Débito</div>
+                    </button>
+                </div>
+
+                <!-- PIX Payment -->
+                <div id="pix-payment" class="payment-method active">
+                    <div class="qrcode-container">
+                        <div class="qrcode-box">
+                            <div class="qrcode-placeholder">
+                                <div class="qr-icon">⚡</div>
+                                <div class="qr-text">CÓDIGO QR PIX</div>
+                                <div class="qr-subtext">Escaneie para pagar R$ 10,00</div>
+                            </div>
+                        </div>
+
+                        <div class="pix-code-section">
+                            <label>Código PIX Copia e Cola:</label>
+                            <div class="pix-code">
+                                <code id="pix-code-text">00020126580014br.gov.bcb.pix2536example@mercadopago.com...</code>
+                                <button class="copy-button" onclick="copyPixCode()">Copiar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-status">
+                        <div class="status-icon">⏳</div>
+                        <div class="status-text">Aguardando pagamento...</div>
+                    </div>
+
+                    <button class="demo-button" onclick="simulatePayment()">
+                        ✓ Simular Pagamento (DEMO)
+                    </button>
+                </div>
+
+                <!-- Card Payment -->
+                <div id="card-payment" class="payment-method">
+                    <form class="card-form" onsubmit="return false;">
+                        <div class="form-group">
+                            <label>Número do Cartão</label>
+                            <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Validade</label>
+                                <input type="text" placeholder="MM/AA" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" placeholder="000" maxlength="3">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nome no Cartão</label>
+                            <input type="text" placeholder="NOME COMPLETO" style="text-transform: uppercase;">
+                        </div>
+
+                        <button class="submit-button" onclick="simulatePayment()">
+                            Pagar R$ 10,00 →
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Security Badge -->
+                <div class="security-badge">
+                    <span class="checkmark">✓</span>
+                    <span>Pagamento seguro via Mercado Pago • Dados protegidos</span>
+                </div>
+            </div>
+
+            <button class="back-button" onclick="backToTeaser()">← Voltar</button>
+        </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div id="results-screen" class="screen">
+        <div class="container">
+            <div class="results-content">
+                <div class="badge success-badge">
+                    <span class="badge-icon">🏆</span>
+                    <span class="badge-text">SEU DESTINO REVELADO</span>
+                </div>
+
+                <h1 class="title">
+                    <span class="gradient-text">O Tesouro</span>
+                    <span class="gradient-text">Foi Revelado!</span>
+                </h1>
+
+                <!-- Main Result Card -->
+                <div class="main-result-card">
+                    <div class="result-icon">💎</div>
+                    <div class="result-title">Você chegou a</div>
+                    <div class="result-score" id="final-score">85%</div>
+                    <div class="result-subtitle">de distância do tesouro</div>
+                </div>
+
+                <!-- Journey Map -->
+                <div class="journey-map">
+                    <h3>📜 Mapa da Sua Jornada</h3>
+                    <div class="journey-path" id="journey-path">
+                        <!-- Will be filled with journey steps -->
+                    </div>
+                </div>
+
+                <!-- Archetype Card -->
+                <div class="archetype-card">
+                    <h3>🎭 Seu Arquétipo de Aventureiro</h3>
+                    <div class="archetype-content">
+                        <div class="archetype-title" id="archetype-title">O Sábio Cauteloso</div>
+                        <div class="archetype-description" id="archetype-description">
+                            Você valoriza sabedoria sobre riqueza material. Suas escolhas mostram equilíbrio entre coragem e prudência.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insights -->
+                <div class="insights-section">
+                    <h3>💡 Análise Detalhada</h3>
+                    <div class="insights-grid" id="insights-grid">
+                        <!-- Will be filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="final-cta">
+                    <p class="cta-text">🎯 Quer tentar chegar mais perto do tesouro?</p>
+                    <button class="cta-button" onclick="resetJourney()">
+                        <span>NOVA JORNADA</span>
+                        <span class="arrow">→</span>
+                    </button>
+                    <p class="email-note">💾 Seu certificado será enviado por email em até 5 minutos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
